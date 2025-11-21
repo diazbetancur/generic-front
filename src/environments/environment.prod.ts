@@ -1,5 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://localhost:7125/api'
+  apiUrl: 'https://apiportalpacientetest.lacardio.org:5254/api',
 };
-
