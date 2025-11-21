@@ -23,7 +23,7 @@ export class RoleGuard implements CanActivate {
       return false;
     }
 
-    if (requiredRoles && !requiredRoles.includes(user.role)) {
+    if (requiredRoles && !user.roles.some(role => requiredRoles.includes(role))) {
       this.router.navigate(['/unauthorized']);
       return false;
     }

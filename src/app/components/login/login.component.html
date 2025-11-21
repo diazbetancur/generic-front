@@ -6,18 +6,17 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
       <div class="form-group">
-        <label for="email" class="form-label">Correo Electrónico</label>
+        <label for="userName" class="form-label">Usuario</label>
         <input
-          type="email"
-          id="email"
-          formControlName="email"
+          type="text"
+          id="userName"
+          formControlName="userName"
           class="form-control"
-          [class.error]="email?.invalid && email?.touched"
-          placeholder="usuario@ejemplo.com"
+          [class.error]="userName?.invalid && userName?.touched"
+          placeholder="Nombre de usuario"
         />
-        <div class="error-message" *ngIf="email?.invalid && email?.touched">
-          <span *ngIf="email?.errors?.['required']">El correo es requerido</span>
-          <span *ngIf="email?.errors?.['email']">Correo inválido</span>
+        <div class="error-message" *ngIf="userName?.invalid && userName?.touched">
+          <span *ngIf="userName?.errors?.['required']">El usuario es requerido</span>
         </div>
       </div>
 

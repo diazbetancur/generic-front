@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, LoginResponse, ApiResponse } from '../interfaces/user.interface';
+import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+import { User, LoginRequest, LoginResponse, ForgotPasswordRequest, ForgotPasswordResponse, ResetPasswordRequest, ResetPasswordResponse } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api'; // Ajustar según tu API
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
-  login(email: string, password: string): Observable<ApiResponse<LoginResponse>> {
-    return this.http.post<ApiResponse<LoginResponse>>(`${this.apiUrl}/auth/login`, {
-      email,
-      password
-    });
+  login(loginRequest: LoginRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/Auth/admin/login`, loginRequest).pipe(
+      tap((response: LoginResponse) => {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
+      })
+    );
   }
 
   logout(): void {
@@ -30,6 +34,27 @@ export class AuthService {
   getUser(): User | null {
     const userStr = localStorage.getItem('user');
     return userStr ? JSON.parse(userStr) : null;
+  }
+
+  getLoginResponse(): LoginResponse | null {
+    const token = this.getToken();
+    const user = this.getUser();
+    if (token && user) {
+      return {
+        token: token,
+        expiresAt: '',
+        user: user
+      };
+    }
+    return null;
+  }
+
+  forgotPassword(forgotPasswordRequest: ForgotPasswordRequest): Observable<ForgotPasswordResponse> {
+    return this.http.post<ForgotPasswordResponse>(`${this.apiUrl}/Auth/admin/forgot-password`, forgotPasswordRequest);
+  }
+
+  resetPassword(resetPasswordRequest: ResetPasswordRequest): Observable<ResetPasswordResponse> {
+    return this.http.post<ResetPasswordResponse>(`${this.apiUrl}/Auth/admin/reset-password`, resetPasswordRequest);
   }
 
   isAuthenticated(): boolean {

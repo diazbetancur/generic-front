@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm: FormGroup;
   loading = false;
   returnUrl: string = '/home';
@@ -20,46 +20,30 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      userName: ['admin', [Validators.required]],
+      password: ['4dm1nC4rd10.*', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  ngOnInit(): void {
-  }
-
   onSubmit(): void {
+    this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
       this.loading = true;
-      
-      // Por el momento, simplemente guardar un token y redirigir
-      // Sin validación real
-      const mockToken = 'mock-token-' + Date.now();
-      const mockUser = {
-        id: 1,
-        name: 'Usuario Admin',
-        email: this.loginForm.value.email,
-        role: 'admin'
-      };
 
-      localStorage.setItem('token', mockToken);
-      localStorage.setItem('user', JSON.stringify(mockUser));
-
-      // Simular un pequeño delay
-      setTimeout(() => {
-        this.loading = false;
-        this.router.navigate([this.returnUrl]);
-      }, 500);
-    } else {
-      // Marcar todos los campos como touched para mostrar errores
-      Object.keys(this.loginForm.controls).forEach(key => {
-        this.loginForm.get(key)?.markAsTouched();
+      this.authService.login(this.loginForm.value).subscribe({
+        next: (response) => {
+          this.loading = false;
+          this.router.navigate([this.returnUrl]);
+        },
+        error: (error) => {
+          this.loading = false;
+        }
       });
     }
   }
 
-  get email() {
-    return this.loginForm.get('email');
+  get userName() {
+    return this.loginForm.get('userName');
   }
 
   get password() {
