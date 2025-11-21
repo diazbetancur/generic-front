@@ -16,14 +16,11 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
-          // No autorizado - redirigir al login
           this.router.navigate(['/login']);
         } else if (error.status === 403) {
-          // Prohibido - redirigir a página de no autorizado
           this.router.navigate(['/unauthorized']);
         } else {
-          // Mostrar notificación de error para otros errores
-          const errorMessage = error.error?.message || error.message || 'Ha ocurrido un error';
+          const errorMessage = error.error?.error || error.error?.message || error.message || 'Ha ocurrido un error';
           this.notificationService.error('Error', errorMessage);
         }
 
