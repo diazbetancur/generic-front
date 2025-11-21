@@ -6,10 +6,10 @@
     
     <div class="header-right">
       <nav class="header-nav">
-        <a (click)="navigateTo('/roles')" class="nav-link">Roles</a>
-        <a (click)="navigateTo('/state')" class="nav-link">Estado</a>
-        <a (click)="navigateTo('/request-type')" class="nav-link">Tipo de Solicitud</a>
-        <a (click)="navigateTo('/frequent-question')" class="nav-link">Pregunta Frecuente</a>
+        <a (click)="navigateTo('/roles')" class="nav-link" [class.active]="isActiveRoute('/roles')">Roles</a>
+        <a (click)="navigateTo('/state')" class="nav-link" [class.active]="isActiveRoute('/state')">Estado</a>
+        <a (click)="navigateTo('/request-type')" class="nav-link" [class.active]="isActiveRoute('/request-type')">Tipo de Solicitud</a>
+        <a (click)="navigateTo('/frequent-question')" class="nav-link" [class.active]="isActiveRoute('/frequent-question')">Pregunta Frecuente</a>
       </nav>
       
       <div class="user-menu">

@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/user.interface';
 
@@ -11,6 +12,7 @@ import { User } from '../../interfaces/user.interface';
 export class HeaderComponent implements OnInit {
   user: User | null = null;
   showDropdown = false;
+  currentRoute: string = '';
 
   constructor(
     private authService: AuthService,
@@ -19,6 +21,18 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
+    
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.currentRoute = event.urlAfterRedirects;
+      });
+    
+    this.currentRoute = this.router.url;
+  }
+
+  isActiveRoute(route: string): boolean {
+    return this.currentRoute === route || this.currentRoute.startsWith(route + '/');
   }
 
   @HostListener('document:click', ['$event'])
