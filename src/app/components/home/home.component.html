@@ -1,0 +1,21 @@
+<div class="home-container">
+  <h2>Bienvenido al Panel de Administración</h2>
+  
+  <div *ngIf="loading" class="loading">
+    <p>Cargando...</p>
+  </div>
+
+  <div *ngIf="!loading && users.length > 0" class="users-list">
+    <h3>Usuarios</h3>
+    <ul>
+      <li *ngFor="let user of users">
+        <strong>{{ user.name }}</strong> - {{ user.email }} ({{ user.role }})
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="!loading && users.length === 0" class="no-data">
+    <p>No hay usuarios disponibles</p>
+  </div>
+</div>
+

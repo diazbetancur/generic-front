@@ -1,0 +1,153 @@
+// Tipografía del manual de marca
+
+// Basado en el manual de identidad corporativa
+// Importar colores para usar en estilos de texto
+@import './colors';
+
+// ===========================================
+// FUENTES
+// ===========================================
+$font-family-primary: 'Prompt', sans-serif;
+$font-family-fallback: 'Roboto', 'Helvetica Neue', sans-serif;
+$font-family-base: $font-family-primary, $font-family-fallback;
+
+// ===========================================
+// TAMAÑOS DE FUENTE
+// ===========================================
+// Títulos
+$font-size-title: 70pt; // 70pts según manual
+$font-size-title-line-height: 82pt; // 82pts según manual
+
+// Cuerpo de texto
+$font-size-body: 27pt; // 27pts según manual
+$font-size-body-line-height: 20pt; // 20pts según manual
+
+// Tamaños adicionales para la aplicación
+$font-size-h1: 48px;
+$font-size-h2: 36px;
+$font-size-h3: 28px;
+$font-size-h4: 24px;
+$font-size-h5: 20px;
+$font-size-h6: 18px;
+$font-size-large: 18px;
+$font-size-base: 16px;
+$font-size-small: 14px;
+$font-size-xs: 12px;
+
+// ===========================================
+// PESOS DE FUENTE
+// ===========================================
+$font-weight-extralight: 200; // Prompt ExtraLight
+$font-weight-normal: 400; // Prompt Regular
+$font-weight-semibold: 600; // Prompt Semibold
+
+// ===========================================
+// ESTILOS DE TEXTO SEGÚN MANUAL
+// ===========================================
+// Título principal
+%title-style {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-extralight;
+  font-size: $font-size-title;
+  line-height: $font-size-title-line-height;
+  color: $color-text-primary;
+}
+
+// Título con tab (línea roja)
+%title-with-tab-style {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-title;
+  line-height: $font-size-title-line-height;
+  color: $color-text-primary;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: $color-primary-red; // PANTONE® 192C
+  }
+}
+
+// Cuerpo de texto
+%body-text-style {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-extralight;
+  font-size: $font-size-body;
+  line-height: $font-size-body-line-height;
+  color: $color-text-primary;
+}
+
+// ===========================================
+// CLASES UTILITARIAS
+// ===========================================
+.title {
+  @extend %title-style;
+}
+
+.title-with-tab {
+  @extend %title-with-tab-style;
+}
+
+.body-text {
+  @extend %body-text-style;
+}
+
+// Clases de peso de fuente
+.font-extralight {
+  font-weight: $font-weight-extralight;
+}
+
+.font-normal {
+  font-weight: $font-weight-normal;
+}
+
+.font-semibold {
+  font-weight: $font-weight-semibold;
+}
+
+// Clases de tamaño
+.text-xs { font-size: $font-size-xs; }
+.text-small { font-size: $font-size-small; }
+.text-base { font-size: $font-size-base; }
+.text-large { font-size: $font-size-large; }
+.text-h6 { font-size: $font-size-h6; }
+.text-h5 { font-size: $font-size-h5; }
+.text-h4 { font-size: $font-size-h4; }
+.text-h3 { font-size: $font-size-h3; }
+.text-h2 { font-size: $font-size-h2; }
+.text-h1 { font-size: $font-size-h1; }
+
+// ===========================================
+// MIXINS UTILITARIOS
+// ===========================================
+@mixin title-style($size: $font-size-title, $weight: $font-weight-extralight) {
+  font-family: $font-family-primary;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $font-size-title-line-height;
+  color: $color-text-primary;
+}
+
+@mixin body-text-style($size: $font-size-body, $weight: $font-weight-extralight) {
+  font-family: $font-family-primary;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $font-size-body-line-height;
+  color: $color-text-primary;
+}
+
+@mixin brand-typography($element: 'body') {
+  @if $element == 'title' {
+    @include title-style();
+  } @else if $element == 'title-tab' {
+    @include title-style($weight: $font-weight-semibold);
+  } @else {
+    @include body-text-style();
+  }
+}
+

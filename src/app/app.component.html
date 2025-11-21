@@ -1,0 +1,9 @@
+<div class="app-container">
+  <header *ngIf="showHeader">
+    <h1>{{ title }}</h1>
+  </header>
+  <main [class.no-header]="!showHeader">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
