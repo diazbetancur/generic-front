@@ -1,0 +1,28 @@
+<header class="header">
+  <div class="header-content">
+    <div class="header-left">
+      <h1 class="header-title">Cardio Admin Portal</h1>
+    </div>
+    
+    <div class="header-right">
+      <nav class="header-nav">
+        <a (click)="navigateTo('/roles')" class="nav-link">Roles</a>
+        <a (click)="navigateTo('/state')" class="nav-link">Estado</a>
+        <a (click)="navigateTo('/request-type')" class="nav-link">Tipo de Solicitud</a>
+        <a (click)="navigateTo('/frequent-question')" class="nav-link">Pregunta Frecuente</a>
+      </nav>
+      
+      <div class="user-menu">
+        <button class="user-button" (click)="toggleDropdown()">
+          <span class="user-name">{{ user?.firstName }} {{ user?.lastName }}</span>
+          <span class="dropdown-arrow">▼</span>
+        </button>
+        
+        <div class="dropdown-menu" *ngIf="showDropdown">
+          <a (click)="logout()" class="dropdown-item">Cerrar Sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+

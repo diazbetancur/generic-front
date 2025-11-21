@@ -1,0 +1,36 @@
+@import '../../../core/constants/colors.scss';
+@import '../../../core/constants/typography.scss';
+
+.confirm-dialog {
+  padding: 2rem;
+  min-width: 450px;
+  max-width: 500px;
+  text-align: center;
+}
+
+.dialog-title {
+  margin: 0 0 1.5rem 0;
+  font-size: $font-size-h4;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  font-family: $font-family-base;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.dialog-message {
+  margin: 0 0 2rem 0;
+  font-size: $font-size-base;
+  color: $color-text-secondary;
+  line-height: 1.6;
+  font-family: $font-family-base;
+  text-align: center;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+

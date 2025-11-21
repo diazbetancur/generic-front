@@ -4,11 +4,13 @@
   flex-direction: column;
 }
 
+@import './core/constants/colors.scss';
+
 header {
-  background-color: #1976d2;
-  color: white;
+  background-color: $color-primary-blue;
+  color: $color-text-light;
   padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  @include brand-shadow(0.1);
 }
 
 header h1 {

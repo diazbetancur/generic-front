@@ -1,0 +1,91 @@
+@import '../../core/constants/colors.scss';
+@import '../../core/constants/typography.scss';
+
+.roles-container {
+  padding: 2rem;
+}
+
+.roles-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.roles-header h2 {
+  margin: 0;
+}
+
+.roles-table {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: $color-background;
+  @include brand-shadow(0.1);
+}
+
+thead {
+  background-color: $color-background-light;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid $color-border-light;
+}
+
+th {
+  font-weight: 600;
+  color: $color-text-primary;
+}
+
+.actions {
+  white-space: nowrap;
+}
+
+.permissions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.permission-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background-color: rgba($color-primary, 0.1);
+  color: $color-primary;
+  font-size: $font-size-small;
+  font-weight: $font-weight-semibold;
+}
+
+.no-permissions {
+  color: $color-text-muted;
+  font-size: $font-size-small;
+  font-style: italic;
+}
+
+::ng-deep .mat-mdc-paginator {
+  background-color: $color-background;
+  border-top: 1px solid $color-border-light;
+}
+
+::ng-deep .mat-mdc-paginator-container {
+  padding: 1rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: $color-text-secondary;
+}
+
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: $color-text-muted;
+}

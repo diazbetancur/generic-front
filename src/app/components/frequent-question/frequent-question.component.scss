@@ -1,0 +1,125 @@
+@import '../../core/constants/colors.scss';
+@import '../../core/constants/typography.scss';
+
+.frequent-question-container {
+  padding: 2rem;
+}
+
+.frequent-question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.frequent-question-header h2 {
+  margin: 0;
+}
+
+.frequent-questions-table {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+::ng-deep .mat-mdc-paginator {
+  background-color: $color-background;
+  border-top: 1px solid $color-border-light;
+}
+
+::ng-deep .mat-mdc-paginator-container {
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: $color-background;
+  @include brand-shadow(0.1);
+}
+
+thead {
+  background-color: $color-background-light;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid $color-border-light;
+}
+
+th {
+  font-weight: 600;
+  color: $color-text-primary;
+}
+
+.actions {
+  white-space: nowrap;
+}
+
+.frequent-question-form {
+  @include brand-card(true);
+  margin-top: 2rem;
+}
+
+.frequent-question-form h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: $color-text-primary;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: $color-text-primary;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  font-family: $font-family-base;
+  resize: vertical;
+
+  &.error {
+    border-color: $color-error;
+  }
+}
+
+textarea.form-control {
+  min-height: 100px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.error-message {
+  background-color: rgba($color-error, 0.1);
+  color: $color-error;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border-left: 4px solid $color-error;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: $color-text-secondary;
+}
+
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: $color-text-muted;
+}

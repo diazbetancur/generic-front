@@ -1,3 +1,5 @@
+@import '../../core/constants/colors.scss';
+
 .home-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -5,12 +7,12 @@
 }
 
 h2 {
-  color: #1976d2;
+  color: $color-primary-blue;
   margin-bottom: 2rem;
 }
 
 h3 {
-  color: #424242;
+  color: $color-text-primary;
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
@@ -18,7 +20,7 @@ h3 {
 .loading {
   text-align: center;
   padding: 2rem;
-  color: #666;
+  color: $color-text-secondary;
 }
 
 .users-list ul {
@@ -27,16 +29,16 @@ h3 {
 }
 
 .users-list li {
-  background: #f5f5f5;
+  background: $color-background-light;
   padding: 1rem;
   margin-bottom: 0.5rem;
   border-radius: 4px;
-  border-left: 4px solid #1976d2;
+  border-left: 4px solid $color-primary-blue;
 }
 
 .no-data {
   text-align: center;
   padding: 2rem;
-  color: #999;
+  color: $color-text-muted;
 }
 

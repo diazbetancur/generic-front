@@ -23,144 +23,120 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// Definir paletas personalizadas basadas en el manual de marca
-$front-portal-paciente-primary: mat.define-palette(
-  (
-    50: lighten($color-primary-blue, 40%),
-    100: lighten($color-primary-blue, 30%),
-    200: lighten($color-primary-blue, 20%),
-    300: lighten($color-primary-blue, 10%),
-    400: lighten($color-primary-blue, 5%),
-    500: $color-primary-blue,
-    600: darken($color-primary-blue, 5%),
-    700: darken($color-primary-blue, 10%),
-    800: darken($color-primary-blue, 15%),
-    900: darken($color-primary-blue, 20%),
-    A100: lighten($color-primary-blue, 20%),
-    A200: lighten($color-primary-blue, 10%),
-    A400: $color-primary-blue,
-    A700: darken($color-primary-blue, 10%),
-    contrast: (
-      50: $color-text-primary,
-      100: $color-text-primary,
-      200: $color-text-primary,
-      300: $color-text-light,
-      400: $color-text-light,
-      500: $color-text-light,
-      600: $color-text-light,
-      700: $color-text-light,
-      800: $color-text-light,
-      900: $color-text-light,
-      A100: $color-text-primary,
-      A200: $color-text-light,
-      A400: $color-text-light,
-      A700: $color-text-light
-    )
-  )
-);
 
-$front-portal-paciente-accent: mat.define-palette(
-  (
-    50: lighten($color-primary-red, 40%),
-    100: lighten($color-primary-red, 30%),
-    200: lighten($color-primary-red, 20%),
-    300: lighten($color-primary-red, 10%),
-    400: lighten($color-primary-red, 5%),
-    500: $color-primary-red,
-    600: darken($color-primary-red, 5%),
-    700: darken($color-primary-red, 10%),
-    800: darken($color-primary-red, 15%),
-    900: darken($color-primary-red, 20%),
-    A100: lighten($color-primary-red, 20%),
-    A200: lighten($color-primary-red, 10%),
-    A400: $color-primary-red,
-    A700: darken($color-primary-red, 10%),
-    contrast: (
-      50: $color-text-primary,
-      100: $color-text-primary,
-      200: $color-text-primary,
-      300: $color-text-light,
-      400: $color-text-light,
-      500: $color-text-light,
-      600: $color-text-light,
-      700: $color-text-light,
-      800: $color-text-light,
-      900: $color-text-light,
-      A100: $color-text-primary,
-      A200: $color-text-light,
-      A400: $color-text-light,
-      A700: $color-text-light
-    )
-  )
-);
+
+// Definir paletas personalizadas basadas en el manual de marca
+$front-portal-paciente-primary: mat.define-palette((50: lighten($color-primary-blue, 40%),
+      100: lighten($color-primary-blue, 30%),
+      200: lighten($color-primary-blue, 20%),
+      300: lighten($color-primary-blue, 10%),
+      400: lighten($color-primary-blue, 5%),
+      500: $color-primary-blue,
+      600: darken($color-primary-blue, 5%),
+      700: darken($color-primary-blue, 10%),
+      800: darken($color-primary-blue, 15%),
+      900: darken($color-primary-blue, 20%),
+      A100: lighten($color-primary-blue, 20%),
+      A200: lighten($color-primary-blue, 10%),
+      A400: $color-primary-blue,
+      A700: darken($color-primary-blue, 10%),
+      contrast: (50: $color-text-primary,
+        100: $color-text-primary,
+        200: $color-text-primary,
+        300: $color-text-light,
+        400: $color-text-light,
+        500: $color-text-light,
+        600: $color-text-light,
+        700: $color-text-light,
+        800: $color-text-light,
+        900: $color-text-light,
+        A100: $color-text-primary,
+        A200: $color-text-light,
+        A400: $color-text-light,
+        A700: $color-text-light )));
+
+$front-portal-paciente-accent: mat.define-palette((50: lighten($color-primary-red, 40%),
+      100: lighten($color-primary-red, 30%),
+      200: lighten($color-primary-red, 20%),
+      300: lighten($color-primary-red, 10%),
+      400: lighten($color-primary-red, 5%),
+      500: $color-primary-red,
+      600: darken($color-primary-red, 5%),
+      700: darken($color-primary-red, 10%),
+      800: darken($color-primary-red, 15%),
+      900: darken($color-primary-red, 20%),
+      A100: lighten($color-primary-red, 20%),
+      A200: lighten($color-primary-red, 10%),
+      A400: $color-primary-red,
+      A700: darken($color-primary-red, 10%),
+      contrast: (50: $color-text-primary,
+        100: $color-text-primary,
+        200: $color-text-primary,
+        300: $color-text-light,
+        400: $color-text-light,
+        500: $color-text-light,
+        600: $color-text-light,
+        700: $color-text-light,
+        800: $color-text-light,
+        900: $color-text-light,
+        A100: $color-text-primary,
+        A200: $color-text-light,
+        A400: $color-text-light,
+        A700: $color-text-light )));
 
 // The warn palette is optional (defaults to red).
-$front-portal-paciente-warn: mat.define-palette(
-  (
-    50: lighten($color-error, 40%),
-    100: lighten($color-error, 30%),
-    200: lighten($color-error, 20%),
-    300: lighten($color-error, 10%),
-    400: lighten($color-error, 5%),
-    500: $color-error,
-    600: darken($color-error, 5%),
-    700: darken($color-error, 10%),
-    800: darken($color-error, 15%),
-    900: darken($color-error, 20%),
-    A100: lighten($color-error, 20%),
-    A200: lighten($color-error, 10%),
-    A400: $color-error,
-    A700: darken($color-error, 10%),
-    contrast: (
-      50: $color-text-primary,
-      100: $color-text-primary,
-      200: $color-text-primary,
-      300: $color-text-light,
-      400: $color-text-light,
-      500: $color-text-light,
-      600: $color-text-light,
-      700: $color-text-light,
-      800: $color-text-light,
-      900: $color-text-light,
-      A100: $color-text-primary,
-      A200: $color-text-light,
-      A400: $color-text-light,
-      A700: $color-text-light
-    )
-  )
-);
+$front-portal-paciente-warn: mat.define-palette((50: lighten($color-error, 40%),
+      100: lighten($color-error, 30%),
+      200: lighten($color-error, 20%),
+      300: lighten($color-error, 10%),
+      400: lighten($color-error, 5%),
+      500: $color-error,
+      600: darken($color-error, 5%),
+      700: darken($color-error, 10%),
+      800: darken($color-error, 15%),
+      900: darken($color-error, 20%),
+      A100: lighten($color-error, 20%),
+      A200: lighten($color-error, 10%),
+      A400: $color-error,
+      A700: darken($color-error, 10%),
+      contrast: (50: $color-text-primary,
+        100: $color-text-primary,
+        200: $color-text-primary,
+        300: $color-text-light,
+        400: $color-text-light,
+        500: $color-text-light,
+        600: $color-text-light,
+        700: $color-text-light,
+        800: $color-text-light,
+        900: $color-text-light,
+        A100: $color-text-primary,
+        A200: $color-text-light,
+        A400: $color-text-light,
+        A700: $color-text-light )));
 
 // Configuración de tipografía personalizada
-$front-portal-paciente-typography: mat.define-typography-config(
-  $font-family: $font-family-base,
-  $headline-1: mat.define-typography-level($font-size-h1, $font-size-h1 * 1.2, $font-weight-semibold),
-  $headline-2: mat.define-typography-level($font-size-h2, $font-size-h2 * 1.2, $font-weight-semibold),
-  $headline-3: mat.define-typography-level($font-size-h3, $font-size-h3 * 1.2, $font-weight-semibold),
-  $headline-4: mat.define-typography-level($font-size-h4, $font-size-h4 * 1.2, $font-weight-semibold),
-  $headline-5: mat.define-typography-level($font-size-h5, $font-size-h5 * 1.2, $font-weight-semibold),
-  $headline-6: mat.define-typography-level($font-size-h6, $font-size-h6 * 1.2, $font-weight-semibold),
-  $subtitle-1: mat.define-typography-level($font-size-large, $font-size-large * 1.2, $font-weight-normal),
-  $subtitle-2: mat.define-typography-level($font-size-base, $font-size-base * 1.2, $font-weight-normal),
-  $body-1: mat.define-typography-level($font-size-base, $font-size-base * 1.5, $font-weight-normal),
-  $body-2: mat.define-typography-level($font-size-small, $font-size-small * 1.5, $font-weight-normal),
-  $caption: mat.define-typography-level($font-size-xs, $font-size-xs * 1.5, $font-weight-normal),
-  $button: mat.define-typography-level($font-size-base, $font-size-base * 1.2, $font-weight-semibold),
-  $overline: mat.define-typography-level($font-size-xs, $font-size-xs * 1.5, $font-weight-semibold)
-);
+$front-portal-paciente-typography: mat.define-typography-config($font-family: $font-family-base,
+    $headline-1: mat.define-typography-level($font-size-h1, $font-size-h1 * 1.2, $font-weight-semibold),
+    $headline-2: mat.define-typography-level($font-size-h2, $font-size-h2 * 1.2, $font-weight-semibold),
+    $headline-3: mat.define-typography-level($font-size-h3, $font-size-h3 * 1.2, $font-weight-semibold),
+    $headline-4: mat.define-typography-level($font-size-h4, $font-size-h4 * 1.2, $font-weight-semibold),
+    $headline-5: mat.define-typography-level($font-size-h5, $font-size-h5 * 1.2, $font-weight-semibold),
+    $headline-6: mat.define-typography-level($font-size-h6, $font-size-h6 * 1.2, $font-weight-semibold),
+    $subtitle-1: mat.define-typography-level($font-size-large, $font-size-large * 1.2, $font-weight-normal),
+    $subtitle-2: mat.define-typography-level($font-size-base, $font-size-base * 1.2, $font-weight-normal),
+    $body-1: mat.define-typography-level($font-size-base, $font-size-base * 1.5, $font-weight-normal),
+    $body-2: mat.define-typography-level($font-size-small, $font-size-small * 1.5, $font-weight-normal),
+    $caption: mat.define-typography-level($font-size-xs, $font-size-xs * 1.5, $font-weight-normal),
+    $button: mat.define-typography-level($font-size-base, $font-size-base * 1.2, $font-weight-semibold),
+    $overline: mat.define-typography-level($font-size-xs, $font-size-xs * 1.5, $font-weight-semibold));
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$front-portal-paciente-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $front-portal-paciente-primary,
-      accent: $front-portal-paciente-accent,
-      warn: $front-portal-paciente-warn
-    ),
-    typography: $front-portal-paciente-typography,
-    density: 0
-  )
-);
+$front-portal-paciente-theme: mat.define-light-theme((color: (primary: $front-portal-paciente-primary,
+        accent: $front-portal-paciente-accent,
+        warn: $front-portal-paciente-warn ),
+      typography: $front-portal-paciente-typography,
+      density: 0));
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -171,6 +147,7 @@ $front-portal-paciente-theme: mat.define-light-theme(
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Prompt', sans-serif;
 }
 
 html,
@@ -201,41 +178,133 @@ body {
   border: 1px solid $color-border-light;
 }
 
+// Estilos base para botones
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 12px;
+  border: 2px solid;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  font-family: $font-family-base;
+  font-weight: $font-weight-semibold;
+  padding: 16px 28px;
+  font-size: $font-size-large;
+  min-width: 180px;
+  min-height: 56px;
+  width: auto;
+}
+
+// Botón primario (fondo azul oscuro, texto blanco) - "Ingresar" / "Continuar"
 .btn-primary {
   background-color: $color-primary;
   color: $color-text-light;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: $font-size-base;
-  font-weight: $font-weight-semibold;
-  font-family: $font-family-base;
-  transition: all 0.3s ease;
-  &:hover {
+  border-color: $color-primary;
+  
+  &:hover:not(:disabled) {
     background-color: darken($color-primary, 10%);
-    @include brand-shadow(0.2);
+    border-color: darken($color-primary, 10%);
   }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
   &:focus {
-    outline: 2px solid $color-accent;
+    outline: 2px solid $color-primary;
     outline-offset: 2px;
   }
 }
 
+// Botón secundario (borde azul oscuro, fondo blanco, texto azul) - "Regresar"
 .btn-secondary {
-  background-color: $color-secondary;
-  color: $color-text-light;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 4px;
+  background-color: $brand-white;
+  color: $color-primary;
+  border-color: $color-primary;
+  
+  &:hover:not(:disabled) {
+    background-color: lighten($color-primary, 48%);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  &:focus {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// Botón de editar (outline naranja)
+.btn-edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 12px;
+  border: 2px solid $color-complementary-orange;
   cursor: pointer;
-  font-size: $font-size-base;
-  font-weight: $font-weight-semibold;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   font-family: $font-family-base;
-  transition: all 0.3s ease;
-  &:hover {
-    background-color: darken($color-secondary, 10%);
-    @include brand-shadow(0.2);
+  font-weight: $font-weight-semibold;
+  background-color: $brand-white;
+  color: $color-complementary-orange;
+  padding: 12px 20px;
+  font-size: $font-size-base;
+  min-width: 120px;
+  margin-right: 0.5rem;
+
+  &:hover:not(:disabled) {
+    background-color: lighten($color-complementary-orange, 48%);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    outline: 2px solid $color-complementary-orange;
+    outline-offset: 2px;
+  }
+}
+
+// Botón de eliminar (outline rojo)
+.btn-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 12px;
+  border: 2px solid $color-primary-red;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  font-family: $font-family-base;
+  font-weight: $font-weight-semibold;
+  background-color: $brand-white;
+  color: $color-primary-red;
+  padding: 12px 20px;
+  font-size: $font-size-base;
+  min-width: 120px;
+
+  &:hover:not(:disabled) {
+    background-color: lighten($color-primary-red, 48%);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    outline: 2px solid $color-primary-red;
+    outline-offset: 2px;
   }
 }
 
@@ -329,14 +398,23 @@ body {
   @include brand-shadow(0.2);
 }
 
-.snackbar-success {
-  background-color: $color-success;
-  color: $color-text-light;
+// Estilos para notificaciones Snackbar
+::ng-deep .success-snackbar {
+  background-color: $color-success !important;
+  color: $color-text-light !important;
+  
+  .mat-mdc-snack-bar-action {
+    color: $color-text-light !important;
+  }
 }
 
-.snackbar-error {
-  background-color: $color-error;
-  color: $color-text-light;
+::ng-deep .error-snackbar {
+  background-color: $color-error !important;
+  color: $color-text-light !important;
+  
+  .mat-mdc-snack-bar-action {
+    color: $color-text-light !important;
+  }
 }
 
 .snackbar-info {
@@ -348,6 +426,7 @@ body {
   .container {
     padding: 0 8px;
   }
+
   .card {
     margin: 8px 0;
     padding: 16px;
@@ -364,3 +443,29 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// Estilos personalizados para Material Dialog
+.cdk-overlay-backdrop {
+  background-color: rgba($color-text-primary, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.mat-mdc-dialog-container {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba($color-text-primary, 0.2) !important;
+  padding: 0 !important;
+}
+
+.mat-mdc-dialog-surface {
+  border-radius: 12px !important;
+}

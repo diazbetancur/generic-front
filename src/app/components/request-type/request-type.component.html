@@ -1,0 +1,46 @@
+<div class="request-type-container">
+  <div class="request-type-header">
+    <h2>Gestión de Tipos de Solicitud</h2>
+    <button class="btn-primary" (click)="openCreateForm()" [disabled]="loading">
+      + Nuevo Tipo de Solicitud
+    </button>
+  </div>
+
+  <div *ngIf="loading && requestTypes.length === 0" class="loading">
+    <p>Cargando tipos de solicitud...</p>
+  </div>
+
+  <div *ngIf="requestTypes.length > 0" class="request-types-table">
+      <table matSort (matSortChange)="sortData()">
+        <thead>
+          <tr>
+            <th mat-sort-header="name">Nombre</th>
+            <th mat-sort-header="template">Plantilla</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let requestType of paginatedRequestTypes">
+            <td>{{ requestType.name }}</td>
+            <td class="template-cell">{{ requestType.template }}</td>
+            <td class="actions">
+              <button class="btn-edit" (click)="openEditForm(requestType)">Editar</button>
+              <button class="btn-delete" (click)="deleteRequestType(requestType.id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator
+        [length]="requestTypes.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 20, 50]"
+        [pageIndex]="pageIndex"
+        (page)="onPageChange($event)"
+        showFirstLastButtons>
+      </mat-paginator>
+  </div>
+
+  <div *ngIf="requestTypes.length === 0 && !loading" class="no-data">
+    <p>No hay tipos de solicitud registrados</p>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="frequent-question-container">
+  <div class="frequent-question-header">
+    <h2>Gestión de Preguntas Frecuentes</h2>
+    <button class="btn-primary" (click)="openCreateForm()" [disabled]="loading">
+      + Nueva Pregunta
+    </button>
+  </div>
+
+  <div *ngIf="loading && frequentQuestions.length === 0" class="loading">
+    <p>Cargando preguntas frecuentes...</p>
+  </div>
+
+  <div *ngIf="frequentQuestions.length > 0" class="frequent-questions-table">
+      <table matSort (matSortChange)="sortData()">
+        <thead>
+          <tr>
+            <th mat-sort-header="question">Pregunta</th>
+            <th mat-sort-header="response">Respuesta</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let frequentQuestion of paginatedFrequentQuestions">
+            <td>{{ frequentQuestion.question }}</td>
+            <td>{{ frequentQuestion.response }}</td>
+            <td class="actions">
+              <button class="btn-edit" (click)="openEditForm(frequentQuestion)">Editar</button>
+              <button class="btn-delete" (click)="deleteFrequentQuestion(frequentQuestion.id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator
+        [length]="frequentQuestions.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 20, 50]"
+        [pageIndex]="pageIndex"
+        (page)="onPageChange($event)"
+        showFirstLastButtons>
+      </mat-paginator>
+  </div>
+
+  <div *ngIf="frequentQuestions.length === 0 && !loading" class="no-data">
+    <p>No hay preguntas frecuentes registradas</p>
+  </div>
+</div>
+

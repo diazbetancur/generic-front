@@ -1,0 +1,45 @@
+<div class="frequent-question-form-modal">
+  <h2 class="modal-title">{{ isEditMode ? 'Editar Pregunta Frecuente' : 'Nueva Pregunta Frecuente' }}</h2>
+  
+  <form [formGroup]="frequentQuestionForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="question">Pregunta *</label>
+      <textarea
+        id="question"
+        formControlName="question"
+        class="form-control"
+        rows="3"
+        [class.error]="question?.invalid && question?.touched"
+        placeholder="Ingrese la pregunta"
+      ></textarea>
+      <div class="error-message" *ngIf="question?.invalid && question?.touched">
+        <span *ngIf="question?.errors?.['required']">La pregunta es requerida</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="response">Respuesta *</label>
+      <textarea
+        id="response"
+        formControlName="response"
+        class="form-control"
+        rows="5"
+        [class.error]="response?.invalid && response?.touched"
+        placeholder="Ingrese la respuesta"
+      ></textarea>
+      <div class="error-message" *ngIf="response?.invalid && response?.touched">
+        <span *ngIf="response?.errors?.['required']">La respuesta es requerida</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="loading || frequentQuestionForm.invalid">
+        {{ loading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+      </button>
+      <button type="button" class="btn-secondary" (click)="onCancel()" [disabled]="loading">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>
+

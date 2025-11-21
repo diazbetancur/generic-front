@@ -3,10 +3,14 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../services/notification.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private notificationService: NotificationService
+  ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
@@ -17,6 +21,10 @@ export class ErrorInterceptor implements HttpInterceptor {
         } else if (error.status === 403) {
           // Prohibido - redirigir a página de no autorizado
           this.router.navigate(['/unauthorized']);
+        } else {
+          // Mostrar notificación de error para otros errores
+          const errorMessage = error.error?.message || error.message || 'Ha ocurrido un error';
+          this.notificationService.error('Error', errorMessage);
         }
 
         return throwError(() => error);
