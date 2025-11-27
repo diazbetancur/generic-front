@@ -1,30 +1,47 @@
-<header class="header">
-  <div class="header-content">
-    <div class="header-left">
-      <div class="logo-placeholder">
-        <img src="assets/images/logos/logo-lacardio.svg" alt="laCardio Logo" class="logo-image" />
-      </div>
-    </div>
-    
-    <div class="header-right">
-      <nav class="header-nav">
-        <a (click)="navigateTo('/roles')" class="nav-link" [class.active]="isActiveRoute('/roles')">Roles</a>
-        <a (click)="navigateTo('/state')" class="nav-link" [class.active]="isActiveRoute('/state')">Estado</a>
-        <a (click)="navigateTo('/request-type')" class="nav-link" [class.active]="isActiveRoute('/request-type')">Tipo de Solicitud</a>
-        <a (click)="navigateTo('/frequent-question')" class="nav-link" [class.active]="isActiveRoute('/frequent-question')">Pregunta Frecuente</a>
-      </nav>
-      
-      <div class="user-menu">
-        <button class="user-button" (click)="toggleDropdown()">
-          <span class="user-name">{{ user?.firstName }} {{ user?.lastName }}</span>
-          <span class="dropdown-arrow">▼</span>
-        </button>
-        
-        <div class="dropdown-menu" *ngIf="showDropdown">
-          <a (click)="logout()" class="dropdown-item">Cerrar Sesión</a>
-        </div>
-      </div>
+<!-- CHANGE_NAME: Navbar genérico con Bootstrap 5 -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <!-- CHANGE_NAME: Logo de la aplicación -->
+    <a class="navbar-brand fw-bold" routerLink="/home">
+      {{ appName }}
+    </a>
+
+    <!-- Botón del menú móvil -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleMenu()"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Menú de navegación -->
+    <div
+      class="collapse navbar-collapse"
+      [class.show]="isMenuOpen"
+      id="navbarNav"
+    >
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item" *ngIf="isAuthenticated()">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active">
+            Inicio
+          </a>
+        </li>
+
+        <!-- CHANGE_NAME: Agrega aquí tus enlaces de navegación -->
+        <li class="nav-item" *ngIf="!isAuthenticated()">
+          <a class="nav-link" routerLink="/login"> Iniciar Sesión </a>
+        </li>
+
+        <li class="nav-item" *ngIf="isAuthenticated()">
+          <button class="btn btn-outline-light ms-2" (click)="logout()">
+            Cerrar Sesión
+          </button>
+        </li>
+      </ul>
     </div>
   </div>
-</header>
-
+</nav>

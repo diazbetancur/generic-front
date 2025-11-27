@@ -1,5 +1,39 @@
 <div class="home-container">
-  <h2>Bienvenido al Panel de Administración</h2>
-  <p>Seleccione una opción del menú para comenzar.</p>
-</div>
+  <app-header></app-header>
 
+  <main class="main-content">
+    <div class="container py-5">
+      <div class="text-center">
+        <h1 class="display-4 mb-4">Bienvenido a {{ appName }}</h1>
+
+        <!-- CHANGE_NAME: Personaliza el contenido de tu página de inicio aquí -->
+        <p class="lead text-muted mb-4">
+          Este es un template genérico de Angular con arquitectura limpia y
+          escalable.
+        </p>
+
+        <div class="card shadow-sm p-4 mb-4">
+          <h3 class="mb-3">🚀 Características Incluidas</h3>
+          <ul class="list-unstyled text-start">
+            <li class="mb-2">✅ Angular 17+ con TypeScript</li>
+            <li class="mb-2">✅ Sistema de autenticación con interceptors</li>
+            <li class="mb-2">
+              ✅ Configuración multi-ambiente (Dev, QA, Production)
+            </li>
+            <li class="mb-2">✅ Interceptor de carga automática</li>
+            <li class="mb-2">✅ Manejo centralizado de errores HTTP</li>
+            <li class="mb-2">✅ Guards de autenticación y roles</li>
+            <li class="mb-2">✅ Arquitectura limpia y escalable</li>
+            <li class="mb-2">✅ Bootstrap 5 + Angular Material</li>
+          </ul>
+        </div>
+
+        <div class="alert alert-info" role="alert">
+          <strong>📝 Importante:</strong> Busca todos los comentarios
+          <code>CHANGE_NAME</code> en el proyecto y personalízalos según tus
+          necesidades.
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,9 @@
+<!-- CHANGE_NAME: Loading spinner global -->
+<div class="loading-overlay" *ngIf="loading$ | async">
+  <div class="spinner-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="loading-text mt-3">Cargando...</p>
+  </div>
+</div>

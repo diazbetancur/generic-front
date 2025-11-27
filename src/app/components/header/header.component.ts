@@ -1,60 +1,44 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { User } from '../../interfaces/user.interface';
 
+/**
+ * Componente genérico de header/navbar (Angular 20 standalone)
+ * Muestra el menú de navegación y opciones de autenticación
+ */
 @Component({
   selector: 'app-header',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
-  user: User | null = null;
-  showDropdown = false;
-  currentRoute: string = '';
+export class HeaderComponent {
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  public appName = 'CHANGE_NAME';
+  public isMenuOpen = false;
 
-  ngOnInit(): void {
-    this.user = this.authService.getUser();
-    
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
-        this.currentRoute = event.urlAfterRedirects;
-      });
-    
-    this.currentRoute = this.router.url;
+  /**
+   * Verifica si el usuario está autenticado
+   */
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
   }
 
-  isActiveRoute(route: string): boolean {
-    return this.currentRoute === route || this.currentRoute.startsWith(route + '/');
+  /**
+   * Toggle del menú móvil
+   */
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.user-menu')) {
-      this.showDropdown = false;
-    }
-  }
-
-  toggleDropdown(): void {
-    this.showDropdown = !this.showDropdown;
-  }
-
+  /**
+   * Cierra sesión y redirige al login
+   */
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
-  }
-
-  navigateTo(route: string): void {
-    this.router.navigate([route]);
-    this.showDropdown = false;
   }
 }
-

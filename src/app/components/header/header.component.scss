@@ -1,105 +1,44 @@
-@import '../../core/constants/colors.scss';
+/* CHANGE_NAME: Estilos personalizados del navbar */
+@import "../../../app/core/constants/colors.scss";
 
-.header {
-  background-color: $brand-white;
-  color: $color-text-primary;
-  padding: 1rem 2rem;
-  @include brand-shadow(0.1);
-  border-bottom: 1px solid $color-border-light;
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 100%;
-}
-
-.header-left {
-  flex: 1;
-}
-
-.logo-placeholder {
-  display: flex;
-  align-items: center;
-}
-
-.logo-image {
-  height: 40px;
-  width: auto;
-  display: block;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.header-nav {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
+.navbar-brand {
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
 }
 
 .nav-link {
-  color: $color-text-primary;
-  text-decoration: none;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: background-color 0.3s, color 0.3s;
-  font-size: 0.95rem;
-  position: relative;
+  margin: 0 0.5rem;
+  transition: all 0.3s ease;
 
   &:hover {
-    background-color: rgba($color-primary, 0.1);
-    color: $color-primary;
+    transform: translateY(-2px);
   }
 
   &.active {
-    background-color: rgba($color-primary, 0.15);
-    color: $color-primary;
     font-weight: 600;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background-color: $color-primary-red;
-      border-radius: 2px 2px 0 0;
-    }
   }
 }
 
-.user-menu {
-  position: relative;
-}
+/* Estilos responsivos */
+@media (max-width: 991px) {
+  .navbar-nav {
+    padding: 1rem 0;
+  }
 
-.user-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: rgba($color-primary, 0.1);
-  border: none;
-  color: $color-text-primary;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  font-size: 0.95rem;
+  .nav-item {
+    margin: 0.5rem 0;
+  }
 
-  &:hover {
-    background-color: rgba($color-primary, 0.2);
+  .btn-outline-light {
+    width: 100%;
   }
 }
 
-.user-name {
-  font-weight: 500;
-}
+/* CHANGE_NAME: Agrega aquí tus estilos personalizados para el navbar */
 
 .dropdown-arrow {
   font-size: 0.7rem;
@@ -136,4 +75,3 @@
     background-color: $color-background-light;
   }
 }
-

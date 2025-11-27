@@ -1,6 +1,11 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from './app/app.module';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
-
+/**
+ * Bootstrap de la aplicación (Angular 20 standalone)
+ * Sin AppModule - Todo se configura en appConfig
+ */
+bootstrapApplication(AppComponent, appConfig).catch((err) =>
+  console.error(err)
+);

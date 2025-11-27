@@ -1,8 +1,10 @@
 <div class="app-container">
+  <!-- CHANGE_NAME: Header condicional -->
   <app-header *ngIf="showHeader"></app-header>
+
   <main [class.no-header]="!showHeader">
     <router-outlet></router-outlet>
   </main>
-  <app-notification></app-notification>
-</div>
 
+  <!-- CHANGE_NAME: Puedes agregar aquí un componente de loading global si lo necesitas -->
+</div>
