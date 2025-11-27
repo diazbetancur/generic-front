@@ -14,6 +14,7 @@ export interface Role {
   description: string;
   permissionIds: string[];
   permissions: Permission[];
+  isSystem: boolean;
 }
 
 export interface RoleRequest {
@@ -21,4 +22,3 @@ export interface RoleRequest {
   name: string;
   description: string;
 }
-

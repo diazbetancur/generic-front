@@ -25,18 +25,35 @@
           <td>{{ role.name }}</td>
           <td>{{ role.description }}</td>
           <td>
-            <div class="permissions-list" *ngIf="role.permissions && role.permissions.length > 0">
-              <span class="permission-badge" *ngFor="let permission of role.permissions">
+            <div
+              class="permissions-list"
+              *ngIf="role.permissions && role.permissions.length > 0"
+            >
+              <span
+                class="permission-badge"
+                *ngFor="let permission of role.permissions"
+              >
                 {{ permission.name }}
               </span>
             </div>
-            <span *ngIf="!role.permissions || role.permissions.length === 0" class="no-permissions">
+            <span
+              *ngIf="!role.permissions || role.permissions.length === 0"
+              class="no-permissions"
+            >
               Sin permisos
             </span>
           </td>
           <td class="actions">
-            <button class="btn-edit" (click)="openEditForm(role)">Editar</button>
-            <button class="btn-delete" (click)="deleteRole(role.id)">Eliminar</button>
+            <button class="btn-edit" (click)="openEditForm(role)">
+              Editar
+            </button>
+            <button
+              *ngIf="!role.isSystem"
+              class="btn-delete"
+              (click)="deleteRole(role.id)"
+            >
+              Eliminar
+            </button>
           </td>
         </tr>
       </tbody>
@@ -47,7 +64,8 @@
       [pageSizeOptions]="[5, 10, 20, 50]"
       [pageIndex]="pageIndex"
       (page)="onPageChange($event)"
-      showFirstLastButtons>
+      showFirstLastButtons
+    >
     </mat-paginator>
   </div>
 

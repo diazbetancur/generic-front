@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { State, StateRequest } from '../../../interfaces/state.interface';
-import { StateService } from '../../../services/state.service';
 import { NotificationService } from '../../../services/notification.service';
+import { StateService } from '../../../services/state.service';
 
 export interface StateFormModalData {
   state?: State;
@@ -12,7 +12,7 @@ export interface StateFormModalData {
 @Component({
   selector: 'app-state-form-modal',
   templateUrl: './state-form-modal.component.html',
-  styleUrls: ['./state-form-modal.component.scss']
+  styleUrls: ['./state-form-modal.component.scss'],
 })
 export class StateFormModalComponent implements OnInit {
   stateForm: FormGroup;
@@ -33,7 +33,7 @@ export class StateFormModalComponent implements OnInit {
       name: ['', [Validators.required]],
       hexColor: ['', [Validators.required]],
       isDeleted: [false],
-      isSystem: [false]
+      isSystem: [false],
     });
   }
 
@@ -47,12 +47,15 @@ export class StateFormModalComponent implements OnInit {
         name: this.data.state.name,
         hexColor: this.data.state.hexColor,
         isDeleted: this.data.state.isDeleted,
-        isSystem: this.data.state.isSystem
+        isSystem: this.data.state.isSystem,
       });
+      if (this.data.state.isSystem) {
+        this.stateForm.get('name')?.disable();
+      }
     } else {
       this.stateForm.patchValue({
         dateCreated: new Date().toISOString(),
-        hexColor: '#000000'
+        hexColor: '#000000',
       });
     }
   }
@@ -77,7 +80,7 @@ export class StateFormModalComponent implements OnInit {
   createState(): void {
     this.loading = true;
     const { id, ...stateDataWithoutId } = this.stateForm.value;
-    
+
     this.stateService.createState(stateDataWithoutId as any).subscribe({
       next: () => {
         this.notificationService.success('Éxito', 'Estado creado exitosamente');
@@ -86,23 +89,26 @@ export class StateFormModalComponent implements OnInit {
       },
       error: (error) => {
         this.loading = false;
-      }
+      },
     });
   }
 
   updateState(): void {
     this.loading = true;
     const stateData: StateRequest = this.stateForm.value;
-    
+
     this.stateService.updateState(stateData).subscribe({
       next: () => {
-        this.notificationService.success('Éxito', 'Estado actualizado exitosamente');
+        this.notificationService.success(
+          'Éxito',
+          'Estado actualizado exitosamente'
+        );
         this.dialogRef.close(true);
         this.loading = false;
       },
       error: (error) => {
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -118,4 +124,3 @@ export class StateFormModalComponent implements OnInit {
     return this.stateForm.get('hexColor');
   }
 }
-

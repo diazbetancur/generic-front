@@ -11,44 +11,52 @@
   </div>
 
   <div *ngIf="states.length > 0" class="states-table">
-      <table matSort (matSortChange)="sortData()">
-        <thead>
-          <tr>
-            <th mat-sort-header="name">Nombre</th>
-            <th mat-sort-header="hexColor">Color</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let state of paginatedStates">
-            <td>{{ state.name }}</td>
-            <td>
-              <span 
-                class="color-preview" 
-                [style.background-color]="state.hexColor"
-                [matTooltip]="state.hexColor"
-                matTooltipPosition="above"
-              ></span>
-            </td>
-            <td class="actions">
-              <button class="btn-edit" (click)="openEditForm(state)">Editar</button>
-              <button class="btn-delete" (click)="deleteState(state.id)">Eliminar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <mat-paginator
-        [length]="states.length"
-        [pageSize]="pageSize"
-        [pageSizeOptions]="[5, 10, 20, 50]"
-        [pageIndex]="pageIndex"
-        (page)="onPageChange($event)"
-        showFirstLastButtons>
-      </mat-paginator>
+    <table matSort (matSortChange)="sortData()">
+      <thead>
+        <tr>
+          <th mat-sort-header="name">Nombre</th>
+          <th mat-sort-header="hexColor">Color</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let state of paginatedStates">
+          <td>{{ state.name }}</td>
+          <td>
+            <span
+              class="color-preview"
+              [style.background-color]="state.hexColor"
+              [matTooltip]="state.hexColor"
+              matTooltipPosition="above"
+            ></span>
+          </td>
+          <td class="actions">
+            <button class="btn-edit" (click)="openEditForm(state)">
+              Editar
+            </button>
+            <button
+              *ngIf="!state.isSystem"
+              class="btn-delete"
+              (click)="deleteState(state.id)"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator
+      [length]="states.length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      [pageIndex]="pageIndex"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+    >
+    </mat-paginator>
   </div>
 
   <div *ngIf="states.length === 0 && !loading" class="no-data">
     <p>No hay estados registrados</p>
   </div>
 </div>
-

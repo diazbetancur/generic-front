@@ -1,9 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { RequestType, RequestTypeRequest } from '../../../interfaces/request-type.interface';
-import { RequestTypeService } from '../../../services/request-type.service';
+import {
+  RequestType,
+  RequestTypeRequest,
+} from '../../../interfaces/request-type.interface';
 import { NotificationService } from '../../../services/notification.service';
+import { RequestTypeService } from '../../../services/request-type.service';
 
 export interface RequestTypeFormModalData {
   requestType?: RequestType;
@@ -12,7 +15,7 @@ export interface RequestTypeFormModalData {
 @Component({
   selector: 'app-request-type-form-modal',
   templateUrl: './request-type-form-modal.component.html',
-  styleUrls: ['./request-type-form-modal.component.scss']
+  styleUrls: ['./request-type-form-modal.component.scss'],
 })
 export class RequestTypeFormModalComponent implements OnInit {
   requestTypeForm: FormGroup;
@@ -33,7 +36,7 @@ export class RequestTypeFormModalComponent implements OnInit {
       name: ['', [Validators.required]],
       template: ['', [Validators.required]],
       isDeleted: [false],
-      isActive: [true]
+      isActive: [true],
     });
   }
 
@@ -47,11 +50,15 @@ export class RequestTypeFormModalComponent implements OnInit {
         name: this.data.requestType.name,
         template: this.data.requestType.template,
         isDeleted: this.data.requestType.isDeleted,
-        isActive: this.data.requestType.isActive
+        isActive: this.data.requestType.isActive,
       });
+
+      if (this.data.requestType.isSystem) {
+        this.requestTypeForm.get('name')?.disable();
+      }
     } else {
       this.requestTypeForm.patchValue({
-        dateCreated: new Date().toISOString()
+        dateCreated: new Date().toISOString(),
       });
     }
   }
@@ -72,33 +79,41 @@ export class RequestTypeFormModalComponent implements OnInit {
     this.loading = true;
     const { id, ...requestTypeDataWithoutId } = this.requestTypeForm.value;
     requestTypeDataWithoutId.isActive = true; // Siempre true
-    
-    this.requestTypeService.createRequestType(requestTypeDataWithoutId as any).subscribe({
-      next: () => {
-        this.notificationService.success('Éxito', 'Tipo de solicitud creado exitosamente');
-        this.dialogRef.close(true);
-        this.loading = false;
-      },
-      error: (error) => {
-        this.loading = false;
-      }
-    });
+
+    this.requestTypeService
+      .createRequestType(requestTypeDataWithoutId as any)
+      .subscribe({
+        next: () => {
+          this.notificationService.success(
+            'Éxito',
+            'Tipo de solicitud creado exitosamente'
+          );
+          this.dialogRef.close(true);
+          this.loading = false;
+        },
+        error: (error) => {
+          this.loading = false;
+        },
+      });
   }
 
   updateRequestType(): void {
     this.loading = true;
     const requestTypeData: RequestTypeRequest = this.requestTypeForm.value;
     requestTypeData.isActive = true; // Siempre true
-    
+
     this.requestTypeService.updateRequestType(requestTypeData).subscribe({
       next: () => {
-        this.notificationService.success('Éxito', 'Tipo de solicitud actualizado exitosamente');
+        this.notificationService.success(
+          'Éxito',
+          'Tipo de solicitud actualizado exitosamente'
+        );
         this.dialogRef.close(true);
         this.loading = false;
       },
       error: (error) => {
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -114,4 +129,3 @@ export class RequestTypeFormModalComponent implements OnInit {
     return this.requestTypeForm.get('template');
   }
 }
-

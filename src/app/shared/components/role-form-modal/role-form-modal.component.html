@@ -1,6 +1,6 @@
 <div class="role-form-modal">
-  <h2 class="modal-title">{{ isEditMode ? 'Editar Rol' : 'Nuevo Rol' }}</h2>
-  
+  <h2 class="modal-title">{{ isEditMode ? "Editar Rol" : "Nuevo Rol" }}</h2>
+
   <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="name">Nombre *</label>
@@ -27,19 +27,32 @@
         [class.error]="description?.invalid && description?.touched"
         placeholder="Ingrese la descripción del rol"
       ></textarea>
-      <div class="error-message" *ngIf="description?.invalid && description?.touched">
-        <span *ngIf="description?.errors?.['required']">La descripción es requerida</span>
+      <div
+        class="error-message"
+        *ngIf="description?.invalid && description?.touched"
+      >
+        <span *ngIf="description?.errors?.['required']"
+          >La descripción es requerida</span
+        >
       </div>
     </div>
 
     <div class="form-actions">
-      <button type="submit" class="btn-primary" [disabled]="loading || roleForm.invalid">
-        {{ loading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="loading || roleForm.invalid"
+      >
+        {{ loading ? "Guardando..." : isEditMode ? "Actualizar" : "Crear" }}
       </button>
-      <button type="button" class="btn-secondary" (click)="onCancel()" [disabled]="loading">
+      <button
+        type="button"
+        class="btn-secondary"
+        (click)="onCancel()"
+        [disabled]="loading"
+      >
         Cancelar
       </button>
     </div>
   </form>
 </div>
-

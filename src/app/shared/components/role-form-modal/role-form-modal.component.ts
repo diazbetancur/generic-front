@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Role, RoleRequest } from '../../../interfaces/role.interface';
-import { RoleService } from '../../../services/role.service';
 import { NotificationService } from '../../../services/notification.service';
+import { RoleService } from '../../../services/role.service';
 
 export interface RoleFormModalData {
   role?: Role;
@@ -12,7 +12,7 @@ export interface RoleFormModalData {
 @Component({
   selector: 'app-role-form-modal',
   templateUrl: './role-form-modal.component.html',
-  styleUrls: ['./role-form-modal.component.scss']
+  styleUrls: ['./role-form-modal.component.scss'],
 })
 export class RoleFormModalComponent implements OnInit {
   roleForm: FormGroup;
@@ -29,7 +29,7 @@ export class RoleFormModalComponent implements OnInit {
     this.roleForm = this.fb.group({
       id: [''],
       name: ['', [Validators.required]],
-      description: ['', [Validators.required]]
+      description: ['', [Validators.required]],
     });
   }
 
@@ -39,8 +39,12 @@ export class RoleFormModalComponent implements OnInit {
       this.roleForm.patchValue({
         id: this.data.role.id,
         name: this.data.role.name,
-        description: this.data.role.description
+        description: this.data.role.description,
       });
+
+      if (this.data.role.isSystem) {
+        this.roleForm.get('name')?.disable();
+      }
     }
   }
 
@@ -60,9 +64,9 @@ export class RoleFormModalComponent implements OnInit {
     this.loading = true;
     const roleData: RoleRequest = {
       name: this.roleForm.value.name,
-      description: this.roleForm.value.description
+      description: this.roleForm.value.description,
     };
-    
+
     this.roleService.createRole(roleData).subscribe({
       next: () => {
         this.notificationService.success('Éxito', 'Rol creado exitosamente');
@@ -71,7 +75,7 @@ export class RoleFormModalComponent implements OnInit {
       },
       error: (error) => {
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -80,18 +84,21 @@ export class RoleFormModalComponent implements OnInit {
     const roleData: RoleRequest = {
       id: this.roleForm.value.id,
       name: this.roleForm.value.name,
-      description: this.roleForm.value.description
+      description: this.roleForm.value.description,
     };
-    
+
     this.roleService.updateRole(roleData).subscribe({
       next: () => {
-        this.notificationService.success('Éxito', 'Rol actualizado exitosamente');
+        this.notificationService.success(
+          'Éxito',
+          'Rol actualizado exitosamente'
+        );
         this.dialogRef.close(true);
         this.loading = false;
       },
       error: (error) => {
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -107,4 +114,3 @@ export class RoleFormModalComponent implements OnInit {
     return this.roleForm.get('description');
   }
 }
-

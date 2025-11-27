@@ -6,6 +6,7 @@ export interface RequestType {
   template: string;
   isDeleted: boolean;
   isActive: boolean;
+  isSystem: boolean;
 }
 
 export interface RequestTypeRequest {
@@ -17,4 +18,3 @@ export interface RequestTypeRequest {
   isDeleted: boolean;
   isActive: boolean;
 }
-
