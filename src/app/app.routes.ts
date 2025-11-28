@@ -50,6 +50,16 @@ export const routes: Routes = [
   // Wildcard redirige a login (ya no a home)
   {
     path: '**',
-    redirectTo: 'login',
+    loadComponent: () =>
+      import('./components/error/not-found.component').then(
+        (m) => m.NotFoundComponent
+      ),
   },
+  // Nota: ForbiddenComponent podría usarse así desde RoleGuard
+  // router.navigate(['/forbidden']); y añadir ruta:
+  // {
+  //   path: 'forbidden',
+  //   loadComponent: () =>
+  //     import('./components/error/forbidden.component').then((m) => m.ForbiddenComponent),
+  // },
 ];
