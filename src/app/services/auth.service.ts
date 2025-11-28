@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from '../core/services/api.service';
 import { StorageKey, StorageService } from '../core/services/storage.service';
 import {
@@ -22,154 +21,94 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly currentUserSubject: BehaviorSubject<User | null>;
+  /** Signals internos */
+  private readonly storage = inject(StorageService);
+  private readonly api = inject(ApiService);
+  private readonly router = inject(Router);
 
-  /**
-   * Observable del usuario actual
-   * Los componentes pueden suscribirse para reaccionar a cambios de autenticación
-   */
-  public readonly currentUser$: Observable<User | null>;
+  private readonly _user = signal<User | null>(
+    this.storage.get<User>(StorageKey.USER_DATA)
+  );
+  private readonly _token = signal<string | null>(
+    this.storage.get<string>(StorageKey.AUTH_TOKEN)
+  );
 
-  constructor(
-    private readonly api: ApiService,
-    private readonly storage: StorageService,
-    private readonly router: Router
-  ) {
-    // Inicializar BehaviorSubject después de inyecciones
-    this.currentUserSubject = new BehaviorSubject<User | null>(
-      this.storage.get<User>(StorageKey.USER_DATA)
-    );
-    this.currentUser$ = this.currentUserSubject.asObservable();
+  /** Computeds públicos */
+  public readonly user = computed(() => this._user());
+  public readonly token = computed(() => this._token());
+  public readonly isAuthenticatedSignal = computed(() => !!this._token());
 
-    // Sincronizar estado inicial si hay sesión guardada
-    const token = this.getToken();
-    const user = this.getUser();
-    if (token && user) {
-      this.currentUserSubject.next(user);
-    }
-  }
-
-  /**
-   * Inicia sesión del usuario
-   * @param loginRequest - Credenciales de usuario
-   * @returns Observable con la respuesta de login
-   */
-  login(loginRequest: LoginRequest): Observable<LoginResponse> {
-    // Convertir Promise de ApiService a Observable para mantener compatibilidad
-    return new Observable((observer) => {
-      this.api
-        .post<LoginResponse>('Auth/admin/login', loginRequest)
-        .then((response) => {
-          this.setSession(response);
-          observer.next(response);
-          observer.complete();
-        })
-        .catch((error) => {
-          observer.error(error);
-        });
+  constructor() {
+    // Efecto para sincronizar storage ante cambios de token/usuario
+    effect(() => {
+      const token = this._token();
+      const user = this._user();
+      if (token) {
+        this.storage.set(StorageKey.AUTH_TOKEN, token);
+      } else {
+        this.storage.remove(StorageKey.AUTH_TOKEN);
+      }
+      if (user) {
+        this.storage.set(StorageKey.USER_DATA, user);
+      } else {
+        this.storage.remove(StorageKey.USER_DATA);
+      }
     });
   }
 
-  /**
-   * Cierra sesión del usuario
-   * Limpia storage y navega a login
-   */
+  /** Login usando async/await */
+  async login(loginRequest: LoginRequest): Promise<LoginResponse> {
+    const response = await this.api.post<LoginResponse>(
+      'Auth/admin/login',
+      loginRequest
+    );
+    this._token.set(response.token);
+    this._user.set(response.user);
+    return response;
+  }
+
+  /** Logout limpiando signals y storage */
   logout(): void {
-    this.clearSession();
+    this._token.set(null);
+    this._user.set(null);
+    this.storage.clear();
     this.router.navigate(['/login']);
   }
 
-  /**
-   * Obtiene el token de autenticación actual
-   * @returns Token o null si no existe
-   */
+  /** Utilidades de acceso */
   getToken(): string | null {
-    return this.storage.get<string>(StorageKey.AUTH_TOKEN);
+    return this._token();
   }
 
-  /**
-   * Obtiene el usuario autenticado actual
-   * @returns Usuario o null si no hay sesión
-   */
   getUser(): User | null {
-    return this.storage.get<User>(StorageKey.USER_DATA);
+    return this._user();
   }
 
-  /**
-   * Verifica si hay un usuario autenticado
-   * @returns boolean indicando si hay sesión activa
-   */
   isAuthenticated(): boolean {
-    return this.storage.has(StorageKey.AUTH_TOKEN);
+    return this.isAuthenticatedSignal();
   }
 
-  /**
-   * Verifica si el usuario tiene un rol específico
-   * @param role - Rol a verificar
-   * @returns boolean indicando si el usuario tiene ese rol
-   */
   hasRole(role: string): boolean {
-    const user = this.getUser();
+    const user = this._user();
     return user?.roles?.includes(role) ?? false;
   }
 
-  /**
-   * Solicita recuperación de contraseña
-   * @param request - Datos para recuperación
-   * @returns Observable con respuesta
-   */
-  forgotPassword(
+  /** Flujos adicionales convertidos a Promises para consistencia */
+  async forgotPassword(
     request: ForgotPasswordRequest
-  ): Observable<ForgotPasswordResponse> {
-    return new Observable((observer) => {
-      this.api
-        .post<ForgotPasswordResponse>('Auth/admin/forgot-password', request)
-        .then((response) => {
-          observer.next(response);
-          observer.complete();
-        })
-        .catch((error) => {
-          observer.error(error);
-        });
-    });
+  ): Promise<ForgotPasswordResponse> {
+    return this.api.post<ForgotPasswordResponse>(
+      'Auth/admin/forgot-password',
+      request
+    );
   }
 
-  /**
-   * Resetea la contraseña del usuario
-   * @param request - Datos para resetear contraseña
-   * @returns Observable con respuesta
-   */
-  resetPassword(
+  async resetPassword(
     request: ResetPasswordRequest
-  ): Observable<ResetPasswordResponse> {
-    return new Observable((observer) => {
-      this.api
-        .post<ResetPasswordResponse>('Auth/admin/reset-password', request)
-        .then((response) => {
-          observer.next(response);
-          observer.complete();
-        })
-        .catch((error) => {
-          observer.error(error);
-        });
-    });
-  }
-
-  /**
-   * Guarda la sesión completa en storage
-   * @param response - Respuesta de login con token y usuario
-   */
-  private setSession(response: LoginResponse): void {
-    this.storage.set(StorageKey.AUTH_TOKEN, response.token);
-    this.storage.set(StorageKey.USER_DATA, response.user);
-    this.currentUserSubject.next(response.user);
-  }
-
-  /**
-   * Limpia la sesión completa del storage
-   */
-  private clearSession(): void {
-    this.storage.clear();
-    this.currentUserSubject.next(null);
+  ): Promise<ResetPasswordResponse> {
+    return this.api.post<ResetPasswordResponse>(
+      'Auth/admin/reset-password',
+      request
+    );
   }
 }

@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, computed, inject } from '@angular/core';
 import { UtilsService } from '../../services/utils.service';
 
 /**
@@ -12,9 +11,7 @@ import { UtilsService } from '../../services/utils.service';
   styleUrls: ['./loading.component.scss'],
 })
 export class LoadingComponent {
-  public loading$: Observable<boolean>;
-
-  constructor(private readonly utilsService: UtilsService) {
-    this.loading$ = this.utilsService.loading$;
-  }
+  private readonly utils = inject(UtilsService);
+  // Computed para exponer la lectura del signal (permite futuras derivaciones)
+  public readonly loading = computed(() => this.utils.loading());
 }

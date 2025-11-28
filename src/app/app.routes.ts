@@ -1,16 +1,12 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth.guard';
+import { authMatchGuard } from './core/guards/auth.guard';
 
 /**
  * Rutas principales de la aplicación (Angular 20 standalone)
  * Usa lazy loading para optimizar el bundle inicial
  */
 export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'full',
-  },
+  // Ruta pública de login
   {
     path: 'login',
     loadComponent: () =>
@@ -18,14 +14,32 @@ export const routes: Routes = [
         (m) => m.LoginComponent
       ),
   },
+  // Shell protegido con LayoutComponent
   {
-    path: 'home',
+    path: '',
+    canMatch: [authMatchGuard],
     loadComponent: () =>
-      import('./components/home/home.component').then((m) => m.HomeComponent),
-    canActivate: [authGuard],
+      import('./components/layout/layout.component').then(
+        (m) => m.LayoutComponent
+      ),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home',
+      },
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./components/home/home.component').then(
+            (m) => m.HomeComponent
+          ),
+      },
+    ],
   },
+  // Wildcard redirige a login (ya no a home)
   {
     path: '**',
-    redirectTo: '/home',
+    redirectTo: 'login',
   },
 ];

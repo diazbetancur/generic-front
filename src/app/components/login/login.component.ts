@@ -40,24 +40,21 @@ export class LoginComponent {
   /**
    * Maneja el submit del formulario de login
    */
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.loginForm.invalid) {
       return;
     }
 
     this.loading = true;
     this.errorMessage = '';
-
-    this.authService.login(this.loginForm.value).subscribe({
-      next: () => {
-        this.router.navigate(['/home']);
-        this.loading = false;
-      },
-      error: (error) => {
-        this.errorMessage = 'Usuario o contraseña incorrectos';
-        this.loading = false;
-      },
-    });
+    try {
+      await this.authService.login(this.loginForm.value);
+      this.router.navigate(['/home']);
+    } catch (err) {
+      this.errorMessage = 'Usuario o contraseña incorrectos';
+    } finally {
+      this.loading = false;
+    }
   }
 
   /**

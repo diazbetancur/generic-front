@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { computed, Injectable, signal } from '@angular/core';
 
 /**
  * Servicio de utilidades genéricas
@@ -9,29 +8,47 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UtilsService {
-  private readonly loadingSubject = new BehaviorSubject<boolean>(false);
-  public loading$: Observable<boolean> = this.loadingSubject.asObservable();
-
-  constructor() {}
+  /**
+   * Contador interno de peticiones activas. Cuando es > 0, loading = true
+   */
+  private activeRequests = 0;
 
   /**
-   * Muestra el indicador de carga
+   * Signal reactivo de estado de carga global.
    */
-  show(): void {
-    this.loadingSubject.next(true);
+  private readonly _loading = signal<boolean>(false);
+
+  /**
+   * Computed público para lectura (si en el futuro se quisiera derivar más lógica)
+   */
+  public readonly loading = computed(() => this._loading());
+
+  /**
+   * Incrementa el contador y activa el loading si corresponde
+   */
+  showLoading(): void {
+    this.activeRequests++;
+    if (this.activeRequests === 1) {
+      this._loading.set(true);
+    }
   }
 
   /**
-   * Oculta el indicador de carga
+   * Decrementa el contador y desactiva el loading si llega a 0
    */
-  hide(): void {
-    this.loadingSubject.next(false);
+  hideLoading(): void {
+    if (this.activeRequests > 0) {
+      this.activeRequests--;
+    }
+    if (this.activeRequests === 0) {
+      this._loading.set(false);
+    }
   }
 
   /**
-   * Obtiene el estado actual de carga
+   * Estado instantáneo (conveniencia)
    */
   isLoading(): boolean {
-    return this.loadingSubject.value;
+    return this._loading();
   }
 }

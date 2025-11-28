@@ -22,7 +22,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
 
   if (!shouldSkip) {
     if (activeRequests === 0) {
-      utilsService.show();
+      utilsService.showLoading();
     }
     activeRequests++;
   }
@@ -32,7 +32,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
       if (!shouldSkip) {
         activeRequests--;
         if (activeRequests === 0) {
-          utilsService.hide();
+          utilsService.hideLoading();
         }
       }
     })

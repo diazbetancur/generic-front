@@ -1,12 +1,15 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanMatchFn, Route, Router, UrlSegment } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 /**
  * Guard funcional de autenticación (Angular 20 style)
  * Protege las rutas que requieren autenticación
  */
-export const authGuard: CanActivateFn = (route, state) => {
+export const authMatchGuard: CanMatchFn = (
+  route: Route,
+  segments: UrlSegment[]
+) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
@@ -14,7 +17,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  // Redirigir al login guardando la URL solicitada
-  router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+  const attemptedUrl = '/' + segments.map((s) => s.path).join('/');
+  router.navigate(['/login'], { queryParams: { returnUrl: attemptedUrl } });
   return false;
 };
