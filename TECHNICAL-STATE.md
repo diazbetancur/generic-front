@@ -268,14 +268,25 @@ ng lint                           # Ejecuta linter
 ---
 
 **Fecha de actualización:** 27 de noviembre, 2025  
-**Versión de Angular:** 19.2.16  
-**Versión de Angular CLI:** 19.2.19  
-**Versión de Angular Material:** 19.2.19  
+**Versión de Angular:** 20.3.14  
+**Versión de Angular CLI:** 20.3.12  
+**Versión de Angular Material:** 20.2.14  
+**Versión de TypeScript:** 5.9.3  
+**Versión de zone.js:** 0.15.1  
 **Estado:** ✅ Producción Ready
 
 ---
 
 ## 📝 Historial de Actualizaciones
+
+### Actualización a Angular 20 (27 de noviembre, 2025)
+- ✅ Actualizado Angular Core de 19.2.16 a 20.3.14
+- ✅ Actualizado Angular CLI de 19.2.19 a 20.3.12
+- ✅ Actualizado Angular Material y CDK de 19.2.19 a 20.2.14
+- ✅ Actualizado TypeScript de 5.5.4 a 5.9.3 (requerido por Angular 20)
+- ✅ zone.js mantiene versión 0.15.1 (compatible con Angular 20)
+- ✅ Build exitoso sin errores de compilación
+- ✅ Lazy loading chunks funcionando correctamente
 
 ### Actualización a Angular 19 (27 de noviembre, 2025)
 - ✅ Actualizado Angular Core de 18.2.14 a 19.2.16
