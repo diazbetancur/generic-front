@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { HeaderComponent } from './components/header/header.component';
+import { HeaderComponent } from './layout/header/header.component';
 import { AuthService } from './services/auth.service';
 
 /**

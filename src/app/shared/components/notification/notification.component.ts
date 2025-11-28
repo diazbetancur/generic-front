@@ -1,7 +1,10 @@
 // src/app/shared/components/notification/notification.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
-import { NotificationService, NotificationMessage } from '../../../core/services/notification.service';
+import {
+  NotificationMessage,
+  NotificationService,
+} from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-notification',
@@ -12,7 +15,9 @@ import { NotificationService, NotificationMessage } from '../../../core/services
 })
 export class NotificationComponent {
   private readonly notification = inject(NotificationService);
-  public readonly messages = computed<NotificationMessage[]>(() => this.notification.messages());
+  public readonly messages = computed<NotificationMessage[]>(() =>
+    this.notification.messages()
+  );
 
   trackById(index: number, item: NotificationMessage): string {
     return item.id;

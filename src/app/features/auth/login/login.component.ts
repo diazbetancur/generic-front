@@ -7,8 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { FormErrorService } from '../../core/services/form-error.service';
-import { AuthService } from '../../services/auth.service';
+import { FormErrorService } from '../../../core/services/form-error.service';
+import { AuthService } from '../../../services/auth.service';
 
 /**
  * Componente de Login (Angular 20 standalone)

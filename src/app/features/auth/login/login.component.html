@@ -15,7 +15,10 @@
           [class.error]="userName?.invalid && userName?.touched"
           placeholder="Nombre de usuario"
         />
-        <div class="error-message" *ngIf="userName?.invalid && userName?.touched">
+        <div
+          class="error-message"
+          *ngIf="userName?.invalid && userName?.touched"
+        >
           {{ getUserError() }}
         </div>
       </div>
@@ -30,7 +33,10 @@
           [class.error]="password?.invalid && password?.touched"
           placeholder="••••••••"
         />
-        <div class="error-message" *ngIf="password?.invalid && password?.touched">
+        <div
+          class="error-message"
+          *ngIf="password?.invalid && password?.touched"
+        >
           {{ getPasswordError() }}
         </div>
       </div>
@@ -45,9 +51,10 @@
       </button>
 
       <div class="login-footer">
-        <a routerLink="/forgot-password" class="forgot-password-link">¿Olvidaste tu contraseña?</a>
+        <a routerLink="/forgot-password" class="forgot-password-link"
+          >¿Olvidaste tu contraseña?</a
+        >
       </div>
     </form>
   </div>
 </div>
-

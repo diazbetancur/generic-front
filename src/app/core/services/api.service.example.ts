@@ -6,7 +6,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ApiService } from '../core/services/api.service';
+import { ApiService } from './api.service';
 
 // Interfaces de ejemplo
 interface User {

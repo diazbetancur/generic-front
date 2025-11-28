@@ -37,6 +37,35 @@ Opcional: servir estáticos
 npx http-server dist/__PROJECT_SLUG__ -p 4200
 ```
 
+## Comandos útiles
+
+```bash
+# Limpieza de instalación
+rm -rf node_modules package-lock.json && npm install
+
+# Linter (si está configurado)
+npm run lint
+
+# Pruebas unitarias (cuando se agreguen)
+npm test
+
+# Análisis de tamaño del bundle (Angular budgets)
+ng build --configuration production
+
+# Ejecutar con un entorno específico
+ng serve --configuration=production
+ng serve --configuration=qa
+
+# Generar componentes standalone (CLI)
+ng g component app/components/example --standalone --flat
+
+# Generar guard funcional (CanMatchFn)
+ng g guard app/core/guards/example --functional
+
+# Generar servicio
+ng g service app/services/example
+```
+
 ## Arquitectura
 
 - **Core**
@@ -70,6 +99,139 @@ npx http-server dist/__PROJECT_SLUG__ -p 4200
 
 - **Estilos**
   - `styles.scss` con theming (Angular Material M2), tokens de color/typografía, utilidades globales de UI.
+
+## Estructura de carpetas (guía práctica)
+
+```
+src/app/
+  app.routes.ts              # rutas principales
+  feature/                   # subdominios funcionales (pages + lógica local)
+    layout/                  # shell autenticado (header + outlet)
+    home/                    # home autenticado
+    login/                   # login
+    error/                   # páginas de error (404, 403)
+    admin/                   # ejemplo admin (opcional)
+  core/                      # infraestructura cross-cutting
+    guards/                  # authMatchGuard, roleGuard
+    interceptors/            # base-url, auth, loading, error
+    services/                # api, storage, logger, notification, form-error
+    constants/               # colores, tipografía
+  shared/                    # componentes reutilizables
+    components/
+      loading/               # overlay de carga global
+      notification/          # toasts de notificaciones
+```
+
+## Crear un nuevo feature (subdominio)
+
+Ejemplo: crear subdominio `profile` con una pantalla `ProfileComponent`.
+
+1) Crear el componente standalone
+
+```bash
+ng g component app/feature/profile --standalone --flat
+```
+
+Esto generará:
+
+```
+src/app/feature/profile/
+  profile.component.ts
+  profile.component.html
+  profile.component.scss
+```
+
+2) Añadir la ruta en `app.routes.ts`
+
+```ts
+// dentro de children del LayoutComponent autenticado
+{
+  path: 'profile',
+  loadComponent: () => import('./feature/profile/profile.component').then(m => m.ProfileComponent),
+}
+```
+
+3) Proteger la ruta (opcional)
+
+- Requiere autenticación:
+
+```ts
+// la ruta ya está dentro del layout con canMatch: [authMatchGuard]
+```
+
+- Requiere rol específico (ej. Admin):
+
+```ts
+{
+  path: 'admin',
+  canMatch: [authMatchGuard, roleGuard],
+  data: { roles: ['Admin'] },
+  loadComponent: () => import('./feature/admin/admin.component').then(m => m.AdminComponent),
+}
+```
+
+## Uso de componentes ya creados
+
+- `LayoutComponent`
+  - Es el shell de las rutas autenticadas. No necesitas importar `HeaderComponent` en cada página; el layout lo renderiza de forma global.
+
+- `HeaderComponent`
+  - Muestra navegación y acciones de sesión. Para cerrar sesión, usa `AuthService.logout()`.
+
+- `LoadingComponent`
+  - Ya está conectado al `UtilsService` y al `loading.interceptor.ts`. No necesitas manejar loading manual en cada servicio.
+
+- `NotificationComponent` + `NotificationService`
+  - Muestra toasts globales. Puedes disparar notificaciones desde cualquier lugar inyectando el servicio:
+  
+  ```ts
+  constructor(private notification: NotificationService) {}
+  onSave() {
+    this.notification.success('Guardado correctamente');
+  }
+  ```
+
+- `FormErrorService`
+  - Centraliza mensajes de error para formularios reactivos:
+  
+  ```ts
+  this.formError.getErrorMessage(this.form.get('email'), 'Email');
+  ```
+
+## Autenticación y rutas
+
+- `AuthService`
+  - Signals: `user`, `token`, `isAuthenticatedSignal`.
+  - Métodos: `login`, `logout`, `hasRole`.
+
+- Guards
+  - `authMatchGuard`: evita cargar children si no hay sesión.
+  - `roleGuard`: valida roles vía `Route.data.roles` y redirige si falta permiso.
+
+- Interceptores
+  - `auth.interceptor.ts`: agrega `Authorization: Bearer <token>` si existe.
+  - `base-url.interceptor.ts`: agrega la base del API a rutas relativas.
+  - `loading.interceptor.ts`: contador de peticiones y muestra `LoadingComponent`.
+  - `error.interceptor.ts`: maneja 401/403/500/0 y muestra notificaciones.
+
+## Configuración y personalización
+
+- **Tokens del proyecto**: `__PROJECT_NAME__`, `__PROJECT_SLUG__`, `__PROJECT_FOLDER__`.
+  - Puedes usar `customize.sh` (si está presente) para reemplazarlos automáticamente.
+
+- **Environments**: define `apiUrl` y flags en `src/environments/`.
+
+- **Temas y estilos**:
+  - `styles.scss` incluye theming Material (M2), tokens de colores y tipografía.
+  - Ajusta variables en `core/constants/colors.scss` y `typography.scss`.
+
+## Buenas prácticas recomendadas
+
+- Usar `signals` para estado UI local y global.
+- Preferir `canMatch` sobre `canActivate` en rutas protegidas.
+- Añadir `@defer` para vistas pesadas con placeholder de loading.
+- Centralizar errores y notificaciones en los interceptores.
+- Mantener features en `app/components/<feature>` con lazy por componente.
 
 ## Cómo reutilizar este baseline
 
@@ -107,3 +269,10 @@ npx http-server dist/__PROJECT_SLUG__ -p 4200
   - Zoneless: evaluar `provideExperimentalZonelessChangeDetection` y efectos/signals.
   - Material M3: migración de theming cuando sea pertinente.
   - ApiService avanzado: errores tipados, cancelación, retry/backoff, cache TTL.
+
+## Referencias y documentación
+
+- `BASELINE-REPORT.md`: documento de arquitectura y recomendaciones.
+- Angular Docs: https://angular.dev
+- Angular Material: https://material.angular.io
+

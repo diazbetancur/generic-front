@@ -4,7 +4,10 @@ import { AbstractControl } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class FormErrorService {
-  getErrorMessage(control: AbstractControl | null, fieldName?: string): string | null {
+  getErrorMessage(
+    control: AbstractControl | null,
+    fieldName?: string
+  ): string | null {
     if (!control) return null;
     const errors = control.errors;
     if (!errors) return null;

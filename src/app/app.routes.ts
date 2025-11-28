@@ -11,7 +11,7 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./components/login/login.component').then(
+      import('./features/auth/login/login.component').then(
         (m) => m.LoginComponent
       ),
   },
@@ -20,9 +20,7 @@ export const routes: Routes = [
     path: '',
     canMatch: [authMatchGuard],
     loadComponent: () =>
-      import('./components/layout/layout.component').then(
-        (m) => m.LayoutComponent
-      ),
+      import('./layout/layout.component').then((m) => m.LayoutComponent),
     children: [
       {
         path: '',
@@ -32,18 +30,14 @@ export const routes: Routes = [
       {
         path: 'home',
         loadComponent: () =>
-          import('./components/home/home.component').then(
-            (m) => m.HomeComponent
-          ),
+          import('./features/home/home.component').then((m) => m.HomeComponent),
       },
       {
         path: 'admin',
         canMatch: [authMatchGuard, roleGuard],
         data: { roles: ['Admin'] },
         loadComponent: () =>
-          import('./components/home/home.component').then(
-            (m) => m.HomeComponent
-          ),
+          import('./features/home/home.component').then((m) => m.HomeComponent),
       },
     ],
   },
@@ -51,7 +45,7 @@ export const routes: Routes = [
   {
     path: '**',
     loadComponent: () =>
-      import('./components/error/not-found.component').then(
+      import('./features/error/not-found/not-found.component').then(
         (m) => m.NotFoundComponent
       ),
   },
@@ -60,6 +54,6 @@ export const routes: Routes = [
   // {
   //   path: 'forbidden',
   //   loadComponent: () =>
-  //     import('./components/error/forbidden.component').then((m) => m.ForbiddenComponent),
+  //     import('./features/error/forbidden/forbidden.component').then((m) => m.ForbiddenComponent),
   // },
 ];

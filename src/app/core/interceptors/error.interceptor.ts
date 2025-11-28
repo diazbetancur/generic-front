@@ -2,54 +2,68 @@ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 import { LoggerService } from '../services/logger.service';
+import { NotificationService } from '../services/notification.service';
 
 /**
- * Interceptor funcional de manejo de errores HTTP (Angular 20 style)
- * Centraliza el manejo de errores de todas las peticiones HTTP
- * Usa LoggerService para logging controlado por ambiente
+ * Interceptor funcional de manejo de errores HTTP (Angular 20)
+ * - Maneja 401/403/500/0 con notificaciones y logging
+ * - Limpia sesión y redirige en 401 si no está en /login
  */
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const logger = inject(LoggerService);
+  const auth = inject(AuthService);
+  const notification = inject(NotificationService);
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      // Manejo de error 401: Usuario no autenticado
-      if (error.status === 401) {
-        logger.warn('Unauthorized access - redirecting to login', {
-          url: req.url,
-        });
-        router.navigate(['/login']);
-      }
+      const status = error.status;
+      const currentUrl = router.url || '';
+      const isOnLogin = currentUrl.startsWith('/login');
 
-      // Manejo de error 403: Usuario sin permisos
-      if (error.status === 403) {
-        logger.warn('Forbidden access - insufficient permissions', {
-          url: req.url,
-        });
-        router.navigate(['/home']);
-      }
+      // Log de error (siempre)
+      logger.error('HTTP Error', {
+        url: req.url,
+        message: error.message,
+        status,
+      });
 
-      // Manejo de error 500: Error del servidor
-      if (error.status === 500) {
-        logger.error('Server error', error);
-        // TODO: Mostrar notificación al usuario
-      }
-
-      // Manejo de error 0: Sin conexión a internet
-      if (error.status === 0) {
-        logger.error('Network error - no connection');
-        // TODO: Mostrar notificación al usuario
-      }
-
-      // Log general del error
-      if (error.status >= 400) {
-        logger.error(`HTTP Error ${error.status}`, {
-          url: req.url,
-          message: error.message,
-          status: error.status,
-        });
+      switch (status) {
+        case 401: {
+          // Sesión expirada / inválida
+          notification.warning(
+            'Tu sesión ha expirado. Por favor inicia sesión nuevamente.'
+          );
+          // logout() ya limpia storage y navega a /login
+          auth.logout();
+          // Si ya estamos en login, evitar navegación redundante
+          if (isOnLogin) {
+            // No hacer nada extra
+          }
+          break;
+        }
+        case 403: {
+          notification.error('No tienes permisos para acceder a este recurso.');
+          break;
+        }
+        case 500: {
+          notification.error(
+            'Ha ocurrido un error interno, intenta de nuevo más tarde.'
+          );
+          break;
+        }
+        case 0: {
+          notification.error(
+            'Error de conexión, revisa tu red o intenta más tarde.'
+          );
+          break;
+        }
+        default: {
+          // Otros códigos: sin acción adicional
+          break;
+        }
       }
 
       return throwError(() => error);
