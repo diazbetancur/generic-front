@@ -104,22 +104,31 @@ ng g service app/services/example
 
 ```
 src/app/
-  app.routes.ts              # rutas principales
-  feature/                   # subdominios funcionales (pages + lógica local)
-    layout/                  # shell autenticado (header + outlet)
-    home/                    # home autenticado
-    login/                   # login
-    error/                   # páginas de error (404, 403)
-    admin/                   # ejemplo admin (opcional)
-  core/                      # infraestructura cross-cutting
-    guards/                  # authMatchGuard, roleGuard
-    interceptors/            # base-url, auth, loading, error
-    services/                # api, storage, logger, notification, form-error
-    constants/               # colores, tipografía
-  shared/                    # componentes reutilizables
+  app.routes.ts                # rutas principales
+  layout/                      # shell de la app (global)
+    layout.component.*         # shell autenticado
+    header/                    # HeaderComponent (navbar)
+      header.component.*
+  features/                    # subdominios funcionales
+    auth/
+      login/                   # LoginComponent
+        login.component.*
+    home/                      # HomeComponent
+      home.component.*
+    error/                     # páginas de error
+      forbidden/               # ForbiddenComponent
+        forbidden.component.*
+      not-found/               # NotFoundComponent
+        not-found.component.*
+  core/                        # infraestructura cross-cutting
+    guards/                    # authMatchGuard, roleGuard
+    interceptors/              # base-url, auth, loading, error
+    services/                  # api, storage, logger, notification, form-error
+    constants/                 # colores, tipografía
+  shared/                      # componentes reutilizables
     components/
-      loading/               # overlay de carga global
-      notification/          # toasts de notificaciones
+      loading/                 # overlay de carga global
+      notification/            # toasts de notificaciones
 ```
 
 ## Crear un nuevo feature (subdominio)
@@ -129,13 +138,13 @@ Ejemplo: crear subdominio `profile` con una pantalla `ProfileComponent`.
 1) Crear el componente standalone
 
 ```bash
-ng g component app/feature/profile --standalone --flat
+ng g component app/features/profile --standalone --flat
 ```
 
 Esto generará:
 
 ```
-src/app/feature/profile/
+src/app/features/profile/
   profile.component.ts
   profile.component.html
   profile.component.scss
@@ -147,7 +156,7 @@ src/app/feature/profile/
 // dentro de children del LayoutComponent autenticado
 {
   path: 'profile',
-  loadComponent: () => import('./feature/profile/profile.component').then(m => m.ProfileComponent),
+  loadComponent: () => import('./features/profile/profile.component').then(m => m.ProfileComponent),
 }
 ```
 
@@ -166,7 +175,7 @@ src/app/feature/profile/
   path: 'admin',
   canMatch: [authMatchGuard, roleGuard],
   data: { roles: ['Admin'] },
-  loadComponent: () => import('./feature/admin/admin.component').then(m => m.AdminComponent),
+  loadComponent: () => import('./features/admin/admin.component').then(m => m.AdminComponent),
 }
 ```
 
