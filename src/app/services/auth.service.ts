@@ -92,6 +92,27 @@ export class AuthService {
     return user?.roles?.includes(role) ?? false;
   }
 
+  /** Verifica acceso por path según allowedPaths en el token */
+  canAccessPath(path: string): boolean {
+    const user = this._user();
+    if (!user) return false; // si no hay usuario, no hay acceso
+
+    const allowed = user.allowedPaths;
+    if (!allowed || allowed.length === 0) {
+      // si no está definido, no restringe por paths
+      return true;
+    }
+
+    // Normalizar: asegurar que comience por '/'
+    const normalized = path.startsWith('/') ? path : `/${path}`;
+
+    // Match exacto o subpath
+    return allowed.some((p) => {
+      const base = p.startsWith('/') ? p : `/${p}`;
+      return normalized === base || normalized.startsWith(base + '/');
+    });
+  }
+
   /** Flujos adicionales convertidos a Promises para consistencia */
   async forgotPassword(
     request: ForgotPasswordRequest

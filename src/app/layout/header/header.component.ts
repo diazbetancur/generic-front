@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { APP_MENU } from '../../core/constants/app-menu';
 import { AuthService } from '../../services/auth.service';
 
 /**
@@ -20,6 +21,17 @@ export class HeaderComponent {
 
   public appName = '__PROJECT_NAME__';
   public isMenuOpen = false;
+
+  // Menú dinámico basado en roles y allowedPaths
+  public readonly menuItems = computed(() => {
+    return APP_MENU.filter((item) => {
+      const rolesOk = item.roles
+        ? item.roles.some((r) => this.authService.hasRole(r))
+        : true;
+      const pathOk = this.authService.canAccessPath(item.path);
+      return rolesOk && pathOk;
+    });
+  });
 
   /**
    * Verifica si el usuario está autenticado

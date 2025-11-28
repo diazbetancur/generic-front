@@ -25,13 +25,22 @@
       id="navbarNav"
     >
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item" *ngIf="isAuthenticated()">
-          <a class="nav-link" routerLink="/home" routerLinkActive="active">
-            Inicio
+        <!-- Items dinámicos -->
+        <li
+          class="nav-item"
+          *ngFor="let item of menuItems()"
+          [class.d-none]="!isAuthenticated()"
+        >
+          <a
+            class="nav-link"
+            [routerLink]="item.path"
+            routerLinkActive="active"
+          >
+            {{ item.label }}
           </a>
         </li>
 
-        <!-- Agrega aquí tus enlaces de navegación -->
+        <!-- Login / Logout -->
         <li class="nav-item" *ngIf="!isAuthenticated()">
           <a class="nav-link" routerLink="/login"> Iniciar Sesión </a>
         </li>

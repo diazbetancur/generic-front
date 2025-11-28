@@ -77,7 +77,7 @@ ng g service app/services/example
     - `StorageService`: wrapper de `localStorage` con prefijo tokenizado.
     - `LoggerService`: logging por ambiente.
     - `UtilsService`: `signal<boolean>` para loading global (contador de peticiones).
-    - `NotificationService`: cola de toasts con signals y auto-dismiss.
+    - `NotificationService`: cola de toasts con signals, auto-dismiss y throttle anti-spam (suprime duplicados durante 1500ms).
     - `FormErrorService`: helper de mensajes de error para formularios reactivos.
 
 - **Shared**
@@ -209,19 +209,47 @@ src/app/features/profile/
 
 ## Autenticación y rutas
 
-- `AuthService`
-  - Signals: `user`, `token`, `isAuthenticatedSignal`.
-  - Métodos: `login`, `logout`, `hasRole`.
+- `AuthService`  
+  Estado con signals (`user`, `token`), métodos `login`, `logout`, `isAuthenticated`, `hasRole` y `canAccessPath`.  
+  Soporta autorización combinada:
+  - **Roles** (`roles: string[]`) => control macro por tipo de usuario.
+  - **Paths** (`allowedPaths?: string[]`) => control granular por recursos. Si `allowedPaths` falta o está vacío, no se restringe por path.
+  Ejemplo de evaluación de path: `/admin/users/detail` hará match si existe `/admin/users` en `allowedPaths`.
 
-- Guards
-  - `authMatchGuard`: evita cargar children si no hay sesión.
-  - `roleGuard`: valida roles vía `Route.data.roles` y redirige si falta permiso.
+- **Guards**
+  - `authMatchGuard`: protege rutas que requieren sesión.
+  - `roleGuard`: combina validación por roles (en `Route.data.roles`) y paths permitidos (via `canAccessPath`). Si falla cualquiera:
+    - Muestra una notificación de error.
+    - Redirige a `/home`.
+
+### Ejemplo concreto de ruta protegida por roles + paths
+
+```ts
+{
+  path: 'reports',
+  canMatch: [authMatchGuard, roleGuard],
+  data: { roles: ['Admin', 'Report'] },
+  loadComponent: () => import('./features/reports/reports.component').then(m => m.ReportsComponent)
+}
+```
+
+Para que se muestre en el menú dinámico y se autorice:
+- El usuario debe tener al menos uno de los roles en `data.roles`.
+- El path `/reports` debe estar presente (o cubierto por un prefijo) en `allowedPaths` si `allowedPaths` está definido.
+
 
 - Interceptores
   - `auth.interceptor.ts`: agrega `Authorization: Bearer <token>` si existe.
   - `base-url.interceptor.ts`: agrega la base del API a rutas relativas.
   - `loading.interceptor.ts`: contador de peticiones y muestra `LoadingComponent`.
   - `error.interceptor.ts`: maneja 401/403/500/0 y muestra notificaciones.
+
+- **Navegación**
+  - `HeaderComponent`  
+    Encabezado principal de la app. Construye el menú de forma dinámica a partir de:
+    - `APP_MENU` (configuración central de items: label, path, roles requeridos, iconos).
+    - `AuthService.hasRole()` y `AuthService.canAccessPath()` para filtrar qué opciones ve cada usuario.  
+    El menú siempre refleja los permisos reales del token (roles + allowedPaths).
 
 ## Configuración y personalización
 
@@ -240,7 +268,8 @@ src/app/features/profile/
 - Preferir `canMatch` sobre `canActivate` en rutas protegidas.
 - Añadir `@defer` para vistas pesadas con placeholder de loading.
 - Centralizar errores y notificaciones en los interceptores.
-- Mantener features en `app/components/<feature>` con lazy por componente.
+ - Mantener features en `app/features/<feature>` con lazy por componente.
+ - Usar autorización combinada (roles + paths) para granularidad sin lógica dispersa.
 
 ## Cómo reutilizar este baseline
 

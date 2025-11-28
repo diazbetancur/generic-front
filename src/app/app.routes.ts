@@ -39,6 +39,15 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/home/home.component').then((m) => m.HomeComponent),
       },
+      {
+        path: 'reports',
+        canMatch: [authMatchGuard, roleGuard],
+        data: { roles: ['Admin', 'Report'] },
+        loadComponent: () =>
+          import('./features/reports/reports.component').then(
+            (m) => m.ReportsComponent
+          ),
+      },
     ],
   },
   // Wildcard redirige a login (ya no a home)

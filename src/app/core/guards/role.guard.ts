@@ -28,5 +28,14 @@ export const roleGuard: CanMatchFn = (route: Route, segments: UrlSegment[]) => {
     return false;
   }
 
+  // Validar permisos por path si el backend los provee
+  const attemptedPath = '/' + segments.map((s) => s.path).join('/');
+  const canAccess = auth.canAccessPath(attemptedPath);
+  if (!canAccess) {
+    notify.error('No tienes permisos para acceder a este recurso.');
+    router.navigate(['/home']);
+    return false;
+  }
+
   return true;
 };

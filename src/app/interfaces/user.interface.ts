@@ -5,6 +5,7 @@ export interface User {
   firstName: string;
   lastName: string;
   roles: string[];
+  allowedPaths?: string[]; // paths permitidos por token, ej: ['/home', '/admin/users']
 }
 
 export interface LoginRequest {
@@ -46,4 +47,3 @@ export interface ApiResponse<T> {
   data: T;
   message?: string;
 }
-
