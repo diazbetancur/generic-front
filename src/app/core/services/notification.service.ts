@@ -13,6 +13,8 @@ export interface NotificationMessage {
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
   private readonly DEFAULT_TIMEOUT = 4500;
+  private readonly COOLDOWN_MS = 1500; // evita spam de mensajes iguales en ventana corta
+  private lastEmitted: Record<string, number> = {};
 
   // Cola de mensajes como signal
   private readonly _messages = signal<NotificationMessage[]>([]);
@@ -42,6 +44,15 @@ export class NotificationService {
 
   /** Interno: insertar y programar auto dismiss */
   private push(partial: Omit<NotificationMessage, 'id'>): string {
+    // Throttle básico por (type+text)
+    const key = `${partial.type}|${partial.text}`;
+    const now = Date.now();
+    const last = this.lastEmitted[key] || 0;
+    if (now - last < this.COOLDOWN_MS) {
+      return key + '-suppressed';
+    }
+    this.lastEmitted[key] = now;
+
     const id = this.generateId();
     const msg: NotificationMessage = {
       id,
