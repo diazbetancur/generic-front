@@ -1,0 +1,16 @@
+<!-- src/app/shared/components/notification/notification.component.html -->
+<div class="toast-container">
+  <div
+    class="toast"
+    *ngFor="let m of messages(); trackBy: trackById"
+    [class.toast-success]="m.type === 'success'"
+    [class.toast-error]="m.type === 'error'"
+    [class.toast-info]="m.type === 'info'"
+    [class.toast-warning]="m.type === 'warning'"
+  >
+    <div class="toast-content">
+      <span class="toast-text">{{ m.text }}</span>
+      <button class="toast-close" type="button" (click)="close(m.id)" aria-label="Cerrar">×</button>
+    </div>
+  </div>
+</div>
