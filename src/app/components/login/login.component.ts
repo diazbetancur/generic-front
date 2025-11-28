@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { FormErrorService } from '../../core/services/form-error.service';
 import { AuthService } from '../../services/auth.service';
 
 /**
@@ -24,6 +25,7 @@ export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly formError = inject(FormErrorService);
 
   public appName = '__PROJECT_NAME__';
   public loginForm: FormGroup;
@@ -66,5 +68,13 @@ export class LoginComponent {
 
   get password() {
     return this.loginForm.get('password');
+  }
+
+  getUserError(): string | null {
+    return this.formError.getErrorMessage(this.userName, 'Usuario');
+  }
+
+  getPasswordError(): string | null {
+    return this.formError.getErrorMessage(this.password, 'Contraseña');
   }
 }

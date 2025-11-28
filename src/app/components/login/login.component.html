@@ -16,7 +16,7 @@
           placeholder="Nombre de usuario"
         />
         <div class="error-message" *ngIf="userName?.invalid && userName?.touched">
-          <span *ngIf="userName?.errors?.['required']">El usuario es requerido</span>
+          {{ getUserError() }}
         </div>
       </div>
 
@@ -31,8 +31,7 @@
           placeholder="••••••••"
         />
         <div class="error-message" *ngIf="password?.invalid && password?.touched">
-          <span *ngIf="password?.errors?.['required']">La contraseña es requerida</span>
-          <span *ngIf="password?.errors?.['minlength']">Mínimo 6 caracteres</span>
+          {{ getPasswordError() }}
         </div>
       </div>
 
