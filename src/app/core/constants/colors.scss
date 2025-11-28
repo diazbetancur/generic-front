@@ -1,21 +1,22 @@
 // Paleta de colores del manual de marca
+@use "sass:color";
 
 // Basado en el manual de identidad corporativa
 // ===========================================
 // PALETA PRIMARIA
 // ===========================================
 // Azul principal
-$color-primary-blue: #002D72; // PANTONE® 288C
+$color-primary-blue: #002d72; // PANTONE® 288C
 $color-primary-blue-rgb: rgb(0, 45, 114);
 $color-primary-blue-cmyk: cmyk(100%, 80%, 6%, 32%);
 
-// Rojo principal  
-$color-primary-red: #E40046; // PANTONE® 192C
+// Rojo principal
+$color-primary-red: #e40046; // PANTONE® 192C
 $color-primary-red-rgb: rgb(228, 0, 70);
 $color-primary-red-cmyk: cmyk(0%, 94%, 64%, 0%);
 
 // Blanco
-$color-primary-white: #FFFFFF;
+$color-primary-white: #ffffff;
 $color-primary-white-rgb: rgb(255, 255, 255);
 $color-primary-white-cmyk: cmyk(0%, 0%, 0%, 0%);
 
@@ -23,61 +24,61 @@ $color-primary-white-cmyk: cmyk(0%, 0%, 0%, 0%);
 // PALETA SECUNDARIA
 // ===========================================
 // Azul oscuro
-$color-secondary-navy: #041E42; // PANTONE® 282C
+$color-secondary-navy: #041e42; // PANTONE® 282C
 
 // Azul claro
-$color-secondary-light-blue: #A7BCD6; // PANTONE® 651C
+$color-secondary-light-blue: #a7bcd6; // PANTONE® 651C
 
 // Gris azulado oscuro
-$color-secondary-dark-gray: #717C7D; // PANTONE® 444C
+$color-secondary-dark-gray: #717c7d; // PANTONE® 444C
 
 // Gris azulado claro
-$color-secondary-light-gray: #A2ACAB; // PANTONE® 442C
+$color-secondary-light-gray: #a2acab; // PANTONE® 442C
 
 // Marrón medio
-$color-secondary-brown: #7A6855; // PANTONE® 7531C
+$color-secondary-brown: #7a6855; // PANTONE® 7531C
 
 // Beige claro
-$color-secondary-beige: #D1CCBD; // PANTONE® 7534C
+$color-secondary-beige: #d1ccbd; // PANTONE® 7534C
 
 // Marrón rojizo oscuro
 $color-secondary-burgundy: #584446; // PANTONE® 438C
 
 // Rosa polvoriento
-$color-secondary-dusty-rose: #C1B2B6; // PANTONE® 435C
+$color-secondary-dusty-rose: #c1b2b6; // PANTONE® 435C
 
 // ===========================================
 // PALETA COMPLEMENTARIA
 // ===========================================
 // Verde azulado vibrante
-$color-complementary-teal: #00B388; // PANTONE® 339C
+$color-complementary-teal: #00b388; // PANTONE® 339C
 
 // Azul cian brillante
-$color-complementary-cyan: #05C3DE; // PANTONE® 311C
+$color-complementary-cyan: #05c3de; // PANTONE® 311C
 
 // Azul saturado
-$color-complementary-blue: #00A3E0; // PANTONE® 299C
+$color-complementary-blue: #00a3e0; // PANTONE® 299C
 
 // Púrpura profundo
-$color-complementary-purple: #5C068C; // PANTONE® 2597C
+$color-complementary-purple: #5c068c; // PANTONE® 2597C
 
 // Naranja brillante
-$color-complementary-orange: #FF8200; // PANTONE® 151C
+$color-complementary-orange: #ff8200; // PANTONE® 151C
 
 // Verde menta pastel
-$color-complementary-mint: #A7E6D7; // PANTONE® 331C
+$color-complementary-mint: #a7e6d7; // PANTONE® 331C
 
 // Azul cian pastel
-$color-complementary-cyan-pastel: #9ADBE8; // PANTONE® 304C
+$color-complementary-cyan-pastel: #9adbe8; // PANTONE® 304C
 
 // Azul muy claro
-$color-complementary-light-blue: #B9D9EB; // PANTONE® 290C
+$color-complementary-light-blue: #b9d9eb; // PANTONE® 290C
 
 // Púrpura lavanda
-$color-complementary-lavender: #AD96DC; // PANTONE® 2645C
+$color-complementary-lavender: #ad96dc; // PANTONE® 2645C
 
 // Amarillo melocotón
-$color-complementary-peach: #F8E08E; // PANTONE® 1205C
+$color-complementary-peach: #f8e08e; // PANTONE® 1205C
 
 // ===========================================
 // VARIABLES SEMÁNTICAS
@@ -95,7 +96,7 @@ $color-info: $color-complementary-blue;
 
 // Colores de fondo
 $color-background: $color-primary-white;
-$color-background-light: #F5F5F5;
+$color-background-light: #f5f5f5;
 $color-background-dark: $color-secondary-navy;
 
 // Colores de texto
@@ -106,7 +107,7 @@ $color-text-muted: $color-secondary-light-gray;
 
 // Colores de borde
 $color-border: $color-secondary-light-gray;
-$color-border-light: #E0E0E0;
+$color-border-light: #e0e0e0;
 $color-border-dark: $color-secondary-dark-gray;
 
 // ===========================================
@@ -149,14 +150,18 @@ $brand-colors: (
   success: $color-success,
   warning: $color-warning,
   error: $color-error,
-  info: $color-info
+  info: $color-info,
 );
 
 // ===========================================
 // MIXINS UTILITARIOS
 // ===========================================
 @mixin brand-gradient($direction: to right) {
-  background: linear-gradient($direction, $color-primary-blue, $color-primary-red);
+  background: linear-gradient(
+    $direction,
+    $color-primary-blue,
+    $color-primary-red
+  );
 }
 
 @mixin brand-shadow($opacity: 0.1) {
@@ -181,36 +186,36 @@ $brand-colors: (
 }
 
 // Mixin para botones de marca
-@mixin brand-button($type: 'primary') {
-  @if $type == 'primary' {
+@mixin brand-button($type: "primary") {
+  @if $type == "primary" {
     background-color: $color-primary;
     color: $color-text-light;
     border: 1px solid $color-primary;
-    
+
     &:hover {
-      background-color: darken($color-primary, 10%);
-      border-color: darken($color-primary, 10%);
+      background-color: #00215c;
+      border-color: #00215c;
     }
-  } @else if $type == 'secondary' {
+  } @else if $type == "secondary" {
     background-color: $color-secondary;
     color: $color-text-light;
     border: 1px solid $color-secondary;
-    
+
     &:hover {
-      background-color: darken($color-secondary, 10%);
-      border-color: darken($color-secondary, 10%);
+      background-color: #b20030;
+      border-color: #b20030;
     }
-  } @else if $type == 'outline' {
+  } @else if $type == "outline" {
     background-color: transparent;
     color: $color-primary;
     border: 1px solid $color-primary;
-    
+
     &:hover {
       background-color: $color-primary;
       color: $color-text-light;
     }
   }
-  
+
   padding: 12px 24px;
   border-radius: 4px;
   cursor: pointer;
@@ -223,11 +228,11 @@ $brand-colors: (
   background-color: $color-background;
   border-radius: 8px;
   border: 1px solid $color-border-light;
-  
+
   @if $shadow {
     @include brand-shadow(0.1);
   }
-  
+
   padding: 24px;
 }
 
@@ -235,28 +240,67 @@ $brand-colors: (
 // CLASES UTILITARIAS ADICIONALES
 // ===========================================
 // Clases para colores de fondo
-.bg-brand-blue { background-color: $brand-blue; }
-.bg-brand-red { background-color: $brand-red; }
-.bg-brand-white { background-color: $brand-white; }
-.bg-brand-navy { background-color: $brand-navy; }
-.bg-brand-light-blue { background-color: $brand-light-blue; }
-.bg-brand-teal { background-color: $brand-teal; }
-.bg-brand-cyan { background-color: $brand-cyan; }
-.bg-brand-orange { background-color: $brand-orange; }
-.bg-brand-mint { background-color: $brand-mint; }
+.bg-brand-blue {
+  background-color: $brand-blue;
+}
+.bg-brand-red {
+  background-color: $brand-red;
+}
+.bg-brand-white {
+  background-color: $brand-white;
+}
+.bg-brand-navy {
+  background-color: $brand-navy;
+}
+.bg-brand-light-blue {
+  background-color: $brand-light-blue;
+}
+.bg-brand-teal {
+  background-color: $brand-teal;
+}
+.bg-brand-cyan {
+  background-color: $brand-cyan;
+}
+.bg-brand-orange {
+  background-color: $brand-orange;
+}
+.bg-brand-mint {
+  background-color: $brand-mint;
+}
 
 // Clases para colores de texto
-.text-brand-blue { color: $brand-blue; }
-.text-brand-red { color: $brand-red; }
-.text-brand-navy { color: $brand-navy; }
-.text-brand-teal { color: $brand-teal; }
-.text-brand-cyan { color: $brand-cyan; }
-.text-brand-orange { color: $brand-orange; }
-.text-brand-purple { color: $brand-purple; }
+.text-brand-blue {
+  color: $brand-blue;
+}
+.text-brand-red {
+  color: $brand-red;
+}
+.text-brand-navy {
+  color: $brand-navy;
+}
+.text-brand-teal {
+  color: $brand-teal;
+}
+.text-brand-cyan {
+  color: $brand-cyan;
+}
+.text-brand-orange {
+  color: $brand-orange;
+}
+.text-brand-purple {
+  color: $brand-purple;
+}
 
 // Clases para bordes
-.border-brand-blue { border-color: $brand-blue; }
-.border-brand-red { border-color: $brand-red; }
-.border-brand-teal { border-color: $brand-teal; }
-.border-brand-orange { border-color: $brand-orange; }
-
+.border-brand-blue {
+  border-color: $brand-blue;
+}
+.border-brand-red {
+  border-color: $brand-red;
+}
+.border-brand-teal {
+  border-color: $brand-teal;
+}
+.border-brand-orange {
+  border-color: $brand-orange;
+}

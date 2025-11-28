@@ -6,7 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { AuthService } from './services/auth.service';
 
 /**
- * CHANGE_NAME: Componente raíz de la aplicación (Angular 20 standalone)
+ * Componente raíz de la aplicación (Angular 19 standalone)
  */
 @Component({
   selector: 'app-root',
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-  title = 'CHANGE_NAME'; // CHANGE_NAME: Título de tu aplicación
+  title = '__PROJECT_NAME__';
   showHeader = true;
 
   ngOnInit(): void {

@@ -1,10 +1,10 @@
+@use "./core/constants/colors.scss" as *;
+
 .app-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
-
-@import './core/constants/colors.scss';
 
 header {
   background-color: $color-primary-blue;
@@ -26,4 +26,3 @@ main {
 main.no-header {
   padding: 0;
 }
-

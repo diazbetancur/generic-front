@@ -1,5 +1,5 @@
-/* CHANGE_NAME: Estilos personalizados del navbar */
-@import "../../../app/core/constants/colors.scss";
+/* Estilos personalizados del navbar */
+@use "../../../app/core/constants/colors.scss" as *;
 
 .navbar {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -38,7 +38,7 @@
   }
 }
 
-/* CHANGE_NAME: Agrega aquí tus estilos personalizados para el navbar */
+/* Agrega aquí tus estilos personalizados para el navbar */
 
 .dropdown-arrow {
   font-size: 0.7rem;

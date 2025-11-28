@@ -1,7 +1,7 @@
-// CHANGE_NAME: Este es el archivo de configuración para el ambiente de DESARROLLO
+// Archivo de configuración para el ambiente de DESARROLLO
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5000/api', // CHANGE_NAME: URL del API en desarrollo
-  appName: 'CHANGE_NAME', // CHANGE_NAME: Nombre de tu aplicación
-  version: '1.0.0', // CHANGE_NAME: Versión de tu aplicación
+  apiUrl: 'http://localhost:5000/api',
+  appName: '__PROJECT_NAME__',
+  version: '1.0.0',
 };

@@ -1,12 +1,13 @@
-@import '../../core/constants/colors';
-@import '../../core/constants/typography';
+@use "../../core/constants/colors" as *;
+@use "../../core/constants/typography" as *;
+@use "sass:color";
 
 .login-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/assets/images/imgs/doc_work.png');
+  background-image: url("/assets/images/imgs/doc_work.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -103,7 +104,7 @@
   @include brand-shadow(0.2);
 
   &:hover:not(:disabled) {
-    background-color: darken($color-primary-blue, 10%);
+    background-color: #00215c;
     transform: translateY(-2px);
     @include brand-shadow(0.3);
   }
@@ -131,7 +132,7 @@
   transition: color 0.3s ease;
 
   &:hover {
-    color: darken($color-primary-blue, 10%);
+    color: #00215c;
     text-decoration: underline;
   }
 }
@@ -149,4 +150,3 @@
     font-size: 1.5rem;
   }
 }
-

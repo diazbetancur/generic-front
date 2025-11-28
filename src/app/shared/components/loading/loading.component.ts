@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { UtilsService } from '../../services/utils.service';
 
 /**
- * CHANGE_NAME: Componente de loading global
+ * Componente de loading global
  * Se muestra automáticamente cuando hay peticiones HTTP en curso
  */
 @Component({

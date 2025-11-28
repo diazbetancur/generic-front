@@ -2,13 +2,13 @@
 
 // Basado en el manual de identidad corporativa
 // Importar colores para usar en estilos de texto
-@import './colors';
+@use "./colors" as *;
 
 // ===========================================
 // FUENTES
 // ===========================================
-$font-family-primary: 'Prompt', sans-serif;
-$font-family-fallback: 'Roboto', 'Helvetica Neue', sans-serif;
+$font-family-primary: "Prompt", sans-serif;
+$font-family-fallback: "Roboto", "Helvetica Neue", sans-serif;
 $font-family-base: $font-family-primary, $font-family-fallback;
 
 // ===========================================
@@ -61,9 +61,9 @@ $font-weight-semibold: 600; // Prompt Semibold
   line-height: $font-size-title-line-height;
   color: $color-text-primary;
   position: relative;
-  
+
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 0;
@@ -111,16 +111,36 @@ $font-weight-semibold: 600; // Prompt Semibold
 }
 
 // Clases de tamaño
-.text-xs { font-size: $font-size-xs; }
-.text-small { font-size: $font-size-small; }
-.text-base { font-size: $font-size-base; }
-.text-large { font-size: $font-size-large; }
-.text-h6 { font-size: $font-size-h6; }
-.text-h5 { font-size: $font-size-h5; }
-.text-h4 { font-size: $font-size-h4; }
-.text-h3 { font-size: $font-size-h3; }
-.text-h2 { font-size: $font-size-h2; }
-.text-h1 { font-size: $font-size-h1; }
+.text-xs {
+  font-size: $font-size-xs;
+}
+.text-small {
+  font-size: $font-size-small;
+}
+.text-base {
+  font-size: $font-size-base;
+}
+.text-large {
+  font-size: $font-size-large;
+}
+.text-h6 {
+  font-size: $font-size-h6;
+}
+.text-h5 {
+  font-size: $font-size-h5;
+}
+.text-h4 {
+  font-size: $font-size-h4;
+}
+.text-h3 {
+  font-size: $font-size-h3;
+}
+.text-h2 {
+  font-size: $font-size-h2;
+}
+.text-h1 {
+  font-size: $font-size-h1;
+}
 
 // ===========================================
 // MIXINS UTILITARIOS
@@ -133,7 +153,10 @@ $font-weight-semibold: 600; // Prompt Semibold
   color: $color-text-primary;
 }
 
-@mixin body-text-style($size: $font-size-body, $weight: $font-weight-extralight) {
+@mixin body-text-style(
+  $size: $font-size-body,
+  $weight: $font-weight-extralight
+) {
   font-family: $font-family-primary;
   font-weight: $weight;
   font-size: $size;
@@ -141,13 +164,12 @@ $font-weight-semibold: 600; // Prompt Semibold
   color: $color-text-primary;
 }
 
-@mixin brand-typography($element: 'body') {
-  @if $element == 'title' {
+@mixin brand-typography($element: "body") {
+  @if $element == "title" {
     @include title-style();
-  } @else if $element == 'title-tab' {
+  } @else if $element == "title-tab" {
     @include title-style($weight: $font-weight-semibold);
   } @else {
     @include body-text-style();
   }
 }
-

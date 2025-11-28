@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 /**
- * CHANGE_NAME: Servicio de utilidades genéricas
+ * Servicio de utilidades genéricas
  * Maneja el estado de carga global de la aplicación
  */
 @Injectable({

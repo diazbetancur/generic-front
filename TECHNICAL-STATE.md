@@ -184,22 +184,20 @@ Ninguno.
    - Error 500 y error 0 (sin conexión) no muestran notificación al usuario
    - Solo loguean el error
 
-### 🟢 Opcionales (Mejoras futuras):
-2. **`logger.service.ts` (líneas 63, 114):**
+### 🟡 Opcionales (Mejoras futuras):
+2. **logger.service.ts (líneas 63, 114):**
    ```typescript
    // TODO: En producción, enviar a servicio de logging externo
    // TODO: Implementar integración con Sentry, LogRocket, etc.
    ```
    - Logging externo para producción no implementado
 
-3. **Múltiples archivos con `CHANGE_NAME`:**
-   - `app.component.ts` (título de la aplicación)
-   - `login.component.ts`, `home.component.ts`, `header.component.ts` (appName)
-   - `storage.service.ts` (PREFIX del localStorage)
-   - `loading.interceptor.ts` (comentario de configuración)
-   - `loading.component.ts`, `utils.service.ts` (comentarios)
+3. **Sistema de tokens del proyecto:**
+   - El proyecto utiliza tokens estandarizados: `__PROJECT_NAME__`, `__PROJECT_SLUG__`, `__PROJECT_FOLDER__`
+   - Consulta `TOKENS.md` para más información
+   - Usa el script `./customize.sh` para personalizar automáticamente
    
-   **Acción requerida:** Reemplazar `CHANGE_NAME` por el nombre real del proyecto
+   **Acción requerida:** Personalizar los tokens con el nombre real del proyecto
 
 ---
 
@@ -218,7 +216,7 @@ Ninguno.
 
 ### Pendientes recomendados:
 1. Implementar notificaciones de usuario en `error.interceptor.ts`
-2. Reemplazar todos los `CHANGE_NAME` por el nombre del proyecto
+2. Personalizar los tokens del proyecto usando `./customize.sh` o manualmente
 3. (Opcional) Integrar servicio de logging externo en producción
 
 ---
@@ -252,7 +250,8 @@ ng lint                           # Ejecuta linter
    - Agregar componente de notificaciones toast/snackbar
 
 2. **Personalizar el proyecto:**
-   - Buscar y reemplazar todos los `CHANGE_NAME`
+   - Ejecutar `./customize.sh` para reemplazar todos los tokens automáticamente
+   - O buscar y reemplazar manualmente: `__PROJECT_NAME__`, `__PROJECT_SLUG__`, `__PROJECT_FOLDER__`
    - Actualizar `environment.ts` con la URL real del API
    - Configurar el prefix de localStorage en `StorageService`
 
@@ -269,5 +268,22 @@ ng lint                           # Ejecuta linter
 ---
 
 **Fecha de actualización:** 27 de noviembre, 2025  
-**Versión de Angular:** 17.0.0 (con patrones de Angular 20)  
+**Versión de Angular:** 19.2.16  
+**Versión de Angular CLI:** 19.2.19  
+**Versión de Angular Material:** 19.2.19  
 **Estado:** ✅ Producción Ready
+
+---
+
+## 📝 Historial de Actualizaciones
+
+### Actualización a Angular 19 (27 de noviembre, 2025)
+- ✅ Actualizado Angular Core de 18.2.14 a 19.2.16
+- ✅ Actualizado Angular CLI de 18.2.21 a 19.2.19
+- ✅ Actualizado Angular Material y CDK de 17.0.0 a 19.2.19
+- ✅ Actualizado zone.js de 0.14.2 a 0.15.1
+- ✅ Migrado sintaxis Sass de `@import` a `@use`
+- ✅ Reemplazado funciones deprecated de Sass (`lighten()`, `darken()`) con valores hexadecimales
+- ✅ Actualizado funciones de Material Theming para usar API M2 con prefijo `m2-`
+- ✅ Build exitoso: 778.83 kB (137.94 kB gzipped)
+- ✅ Lazy loading chunks funcionando correctamente

@@ -18,7 +18,7 @@ export class HeaderComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-  public appName = 'CHANGE_NAME';
+  public appName = '__PROJECT_NAME__';
   public isMenuOpen = false;
 
   /**

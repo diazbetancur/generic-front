@@ -19,7 +19,7 @@ export enum StorageKey {
   providedIn: 'root',
 })
 export class StorageService {
-  private readonly PREFIX = 'CHANGE_NAME_';
+  private readonly PREFIX = '__PROJECT_SLUG___';
 
   /**
    * Guarda un valor en localStorage con manejo de errores

@@ -1,7 +1,7 @@
-<!-- CHANGE_NAME: Navbar genérico con Bootstrap 5 -->
+<!-- Navbar genérico con Bootstrap 5 -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <!-- CHANGE_NAME: Logo de la aplicación -->
+    <!-- Logo de la aplicación -->
     <a class="navbar-brand fw-bold" routerLink="/home">
       {{ appName }}
     </a>
@@ -31,7 +31,7 @@
           </a>
         </li>
 
-        <!-- CHANGE_NAME: Agrega aquí tus enlaces de navegación -->
+        <!-- Agrega aquí tus enlaces de navegación -->
         <li class="nav-item" *ngIf="!isAuthenticated()">
           <a class="nav-link" routerLink="/login"> Iniciar Sesión </a>
         </li>

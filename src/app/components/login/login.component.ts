@@ -25,7 +25,7 @@ export class LoginComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-  public appName = 'CHANGE_NAME';
+  public appName = '__PROJECT_NAME__';
   public loginForm: FormGroup;
   public loading = false;
   public errorMessage = '';

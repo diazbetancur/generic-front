@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cardio-front-admin": {
+    "__PROJECT_SLUG__": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/cardio-front-admin",
+            "outputPath": "dist/__PROJECT_SLUG__",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -87,13 +87,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "cardio-front-admin:build:production"
+              "buildTarget": "__PROJECT_SLUG__:build:production"
             },
             "qa": {
-              "buildTarget": "cardio-front-admin:build:qa"
+              "buildTarget": "__PROJECT_SLUG__:build:qa"
             },
             "development": {
-              "buildTarget": "cardio-front-admin:build:development"
+              "buildTarget": "__PROJECT_SLUG__:build:development"
             }
           },
           "defaultConfiguration": "development"
