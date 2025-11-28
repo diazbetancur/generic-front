@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authMatchGuard } from './core/guards/auth.guard';
+import { roleGuard } from './core/guards/role.guard';
 
 /**
  * Rutas principales de la aplicación (Angular 20 standalone)
@@ -30,6 +31,15 @@ export const routes: Routes = [
       },
       {
         path: 'home',
+        loadComponent: () =>
+          import('./components/home/home.component').then(
+            (m) => m.HomeComponent
+          ),
+      },
+      {
+        path: 'admin',
+        canMatch: [authMatchGuard, roleGuard],
+        data: { roles: ['Admin'] },
         loadComponent: () =>
           import('./components/home/home.component').then(
             (m) => m.HomeComponent
