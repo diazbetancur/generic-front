@@ -1,0 +1,109 @@
+# Baseline Front Angular 20
+
+Proyecto base para apps web modernas en Angular 20, 100% standalone (sin NgModules), con autenticación, interceptores, layout con shell, notificaciones tipo toast y estructura limpia para escalar por features.
+
+## Requisitos
+
+- **Node.js**: versión recomendada `>= 18.x` (LTS) o `>= 20.x` estable.
+- **Angular CLI**: `npm i -g @angular/cli` (opcional si usas `npm start`).
+- **npm**: `>= 9.x` (o `pnpm`/`yarn` si lo prefieres, ajustando comandos).
+
+## Instrucciones
+
+- **Instalación**
+
+```bash
+npm install
+```
+
+- **Desarrollo**
+
+```bash
+npm start        # si está mapeado a ng serve
+# o
+ng serve -o      # abrir automáticamente el navegador
+```
+
+- **Build producción**
+
+```bash
+npm run build
+# salida: dist/__PROJECT_SLUG__
+```
+
+Opcional: servir estáticos
+
+```bash
+npx http-server dist/__PROJECT_SLUG__ -p 4200
+```
+
+## Arquitectura
+
+- **Core**
+  - Interceptores: `auth` (Bearer token), `base-url` (prepend de API base), `loading` (spinner global con contador), `error` (manejo y notificaciones 401/403/500/network).
+  - Guards: `authMatchGuard` (CanMatchFn para rutas autenticadas), `roleGuard` (roles vía `Route.data.roles`).
+  - Servicios:
+    - `AuthService`: estado con signals (`user`, `token`), `login/logout/hasRole`.
+    - `ApiService`: CRUD HTTP con opciones de headers/params y logging.
+    - `StorageService`: wrapper de `localStorage` con prefijo tokenizado.
+    - `LoggerService`: logging por ambiente.
+    - `UtilsService`: `signal<boolean>` para loading global (contador de peticiones).
+    - `NotificationService`: cola de toasts con signals y auto-dismiss.
+    - `FormErrorService`: helper de mensajes de error para formularios reactivos.
+
+- **Shared**
+  - Componentes reutilizables standalone:
+    - `LoadingComponent`: overlay de carga conectado a `UtilsService`.
+    - `NotificationComponent`: toasts flotantes conectados a `NotificationService`.
+    - Espacio para futuros UI genéricos (tablas, modals, chips, inputs).
+
+- **Components / Features**
+  - `LayoutComponent`: shell autenticado con `HeaderComponent` + `<router-outlet>` y `<app-notification>`.
+  - `HeaderComponent`: navegación y acciones de sesión.
+  - `LoginComponent`: formulario reactivo con `FormErrorService` para mensajes.
+  - `HomeComponent`: página base autenticada.
+  - `Error Pages`: `NotFoundComponent` (404), `ForbiddenComponent` (403).
+
+- **Routing**
+  - `app.routes.ts`: rutas standalone con `loadComponent` (lazy por componente), `canMatch` para autenticación y roles.
+  - Wildcard `**` sirve `NotFoundComponent`.
+
+- **Estilos**
+  - `styles.scss` con theming (Angular Material M2), tokens de color/typografía, utilidades globales de UI.
+
+## Cómo reutilizar este baseline
+
+- **Cambiar el nombre del proyecto**
+  - Tokens: busca y reemplaza `__PROJECT_NAME__`, `__PROJECT_SLUG__`, `__PROJECT_FOLDER__`.
+  - Usa el script `customize.sh` si está incluido para automatizar la tokenización.
+
+- **Configurar environments**
+  - Edita `src/environments/environment.ts`, `environment.qa.ts`, `environment.prod.ts`.
+  - Define `apiUrl`, flags de producción, y otras constantes necesarias.
+
+- **Añadir nuevas rutas/features**
+  - Crea componentes standalone bajo `src/app/components/<feature>/`.
+  - Añade la ruta con `loadComponent` en `app.routes.ts`.
+  - Si requiere autenticación: ponla dentro del `LayoutComponent` y usa `canMatch: [authMatchGuard]`.
+  - Si requiere roles: añade `roleGuard` y `data: { roles: ['Admin'] }`.
+  - Para vistas pesadas: considera `@defer` y loading con `placeholder`.
+
+## Pendientes / Extensiones futuras
+
+- **Tests unitarios**
+  - Cobertura básica para servicios críticos (`AuthService`, interceptores, guards).
+  - Pruebas de componentes con `TestBed` y harnesses.
+
+- **CI/CD**
+  - Pipeline: build, test, lint, audit de dependencias, budget de bundle.
+  - Despliegue a hosting estático o contenedores.
+
+- **i18n**
+  - Internacionalización con `@angular/localize` y mensajes traducibles.
+
+- **Integraciones extra**
+  - Observabilidad: Sentry / OpenTelemetry.
+  - Linting: ESLint con reglas de Angular y RxJS.
+  - Zoneless: evaluar `provideExperimentalZonelessChangeDetection` y efectos/signals.
+  - Material M3: migración de theming cuando sea pertinente.
+  - ApiService avanzado: errores tipados, cancelación, retry/backoff, cache TTL.
